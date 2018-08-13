@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             // Get the Drive file ID.
             fieldId = intent.getStringExtra(EXTRA_FILE_ID);
             getUserAccountAndProcessFile();
+            setUserInfo();
         } else {
             // Unknown action.
             finish();
@@ -152,6 +153,13 @@ public class MainActivity extends AppCompatActivity {
         userName=intent.getStringExtra("USER_NAME");
         userEmail=intent.getStringExtra("USER_EMAIL");
         imgUrl=intent.getStringExtra("IMG_URL");
+        String name=intent.getStringExtra("EMAIL");
+
+        /*Task<GoogleSignInAccount> result=GoogleSignIn.getSignedInAccountFromIntent(intent);
+        GoogleSignInAccount account=result.getResult();
+        String email=account.getEmail();
+        String name=account.getDisplayName();
+       String imgUrl1=account.getPhotoUrl().toString();*/
 
         usernameTV.setText(userName); emailTv.setText(userEmail);
         Glide.with(MainActivity.this).load(imgUrl)
@@ -170,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
             if(REQUEST_CODE_CAPTURE_IMAGE==requestCode){
                 // Store the image data as a bitmap for writing later.
                 bitmapToSave = (Bitmap) intent.getExtras().get("data");
-                saveFileToDrive();
+                //saveFileToDrive();
             }else if(requestCode==REQUEST_CODE_SIGN_IN){
                 driveClient= Drive.getDriveClient(this,
                         GoogleSignIn.getLastSignedInAccount(this));
@@ -236,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
         displayImg=(ImageView)findViewById(R.id.uploadingImgView);
 
         startActivityForResult(Intent.createChooser(intent, "Select Image"), CHOOSING_IMG_REQ);
-        /*displayImg.setImageResource(CHOOSING_IMG_REQ);*/
+
 
     }
 
@@ -266,6 +274,7 @@ public class MainActivity extends AppCompatActivity {
         // Implement the method.
         throw new UnsupportedOperationException(
                 "The getUserAccountAndProcessFile method has not been implemented");
+
     }
 }
 
