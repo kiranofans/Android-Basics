@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
 import android.content.CursorLoader;
@@ -20,7 +19,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.text.LoginFilter;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -35,6 +34,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -44,26 +44,41 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveClient;
+import com.google.android.gms.drive.DriveId;
+import com.google.android.gms.drive.DriveResourceClient;
+import com.google.android.gms.drive.OpenFileActivityOptions;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity
-        implements LoaderCallbacks<Cursor>,GoogleApiClient.OnConnectionFailedListener{
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>,GoogleApiClient.OnConnectionFailedListener{
     private static final int REQUEST_CODE_SIGN_IN = 0;
-    private static final int REQUEST_READ_CONTACTS = 0;
+    private static final int REQUEST_READ_CONTACTS = 3;
+    private static final int REQUEST_CODE_CAPTURE_IMAGE = 1;
+    private static final int REQUEST_CODE_OPEN_ITEM=2;
 
     private static GoogleSignInOptions googleSignOption;
     private static GoogleSignInClient signInClient;
     private static GoogleApiClient apiClient;
     private static GoogleSignInAccount account;
     private static GoogleSignInResult result;
+    private GoogleAuthUtil googleAuthToken;
+    private DriveClient driveClient;
+    private DriveResourceClient driveResClient;
+    private TaskCompletionSource<DriveId> openItemTask;
 
     private ProgressDialog dialog;
     private LinearLayout linearLayout;
@@ -109,22 +124,36 @@ public class LoginActivity extends AppCompatActivity
     }
     /** Build a Google SignIn client. */
     private Intent buildGoogleSignInClient() {
-
+        String serverClientId="825171040809-jm692qdajf6vbssr69m5udukot76sf20.apps.googleusercontent.com";
         googleSignOption = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                        .requestScopes(Drive.SCOPE_FILE).build();
+                .requestScopes(Drive.SCOPE_FILE)
+                .requestScopes(Drive.SCOPE_APPFOLDER)
+                .requestServerAuthCode(serverClientId)
+                .requestEmail().requestProfile().build();
 
-        GoogleSignIn.getClient(this, googleSignOption);
+        signInClient=GoogleSignIn.getClient(this, googleSignOption);
 
         apiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignOption)
                 .build();
+        startActivityForResult(signInClient.getSignInIntent(),REQUEST_CODE_SIGN_IN);
         return Auth.GoogleSignInApi.getSignInIntent(apiClient);
     }
     /** Start sign in activity. */
-    private void signIn() {
-        Intent signIn = buildGoogleSignInClient();
-        startActivityForResult(signIn, REQUEST_CODE_SIGN_IN);
+    protected void signIn() {
+        Set<Scope> requiredScopes=new HashSet<>(2);
+        requiredScopes.add(Drive.SCOPE_FILE);
+        requiredScopes.add(Drive.SCOPE_APPFOLDER);
+        account=GoogleSignIn.getLastSignedInAccount(this);
+        if(account!=null&&account.getGrantedScopes().containsAll(requiredScopes)){
+            initializeDriveClient(account);
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }else{
+            buildGoogleSignInClient();
+        }
+        /*Intent signIn = buildGoogleSignInClient();
+        startActivityForResult(signIn, REQUEST_CODE_SIGN_IN);*/
     }
     private void loginBtn(){
         googleSignIn = (SignInButton) findViewById(R.id.loginBtn);
@@ -235,10 +264,11 @@ public class LoginActivity extends AppCompatActivity
     }
 
     private boolean isEmailValid(String email) {
-        /*if(!email.equals(accEmail)){
-            Toast.makeText(getApplicationContext(),"Oops! Can't find this google account",Toast.LENGTH_SHORT).show();
-        }*/
-        //return (email.contains("@")&& email.equals(accEmail)? true : false);
+        if(!email.equals("kiranofans111@gmail.com")){
+            Toast.makeText(getApplicationContext(),
+                    "Oops! Can't find this google account",Toast.LENGTH_SHORT).show();
+        }
+        //return (email.contains("@")&& email.equals(accEmail)? true :false);
         return email.contains("@");
     }
 
@@ -336,6 +366,11 @@ public class LoginActivity extends AppCompatActivity
         mEmailView.setAdapter(adapter);
     }
 
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
+    }
+
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -399,32 +434,53 @@ public class LoginActivity extends AppCompatActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_CODE_SIGN_IN) {
-            result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            account = result.getSignInAccount();
-
+        account=GoogleSignIn.getLastSignedInAccount(this);
+        if (requestCode == REQUEST_CODE_SIGN_IN&&resultCode==RESULT_OK) {
+            initializeDriveClient(account);
+            Task<GoogleSignInAccount> getAccountTask=GoogleSignIn.getSignedInAccountFromIntent(data);
+            if(getAccountTask.isSuccessful()){
+                initializeDriveClient(getAccountTask.getResult());
+            }else{
+                Log.d("SIGN","Sign-in failed");
+                finish();
+            }
             try {
+                result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+                account = result.getSignInAccount();
                 Intent sendData = new Intent(LoginActivity.this, MainActivity.class);
                 String name, email, imgUrl = "";
                 name = account.getDisplayName();
-                email = account.getAccount().name;
+                email = account.getEmail();
+                resultCode=RESULT_OK;
+                Log.d("EMAIL","Email: "+email);
                 accEmail=email;
                 imgUrl = account.getPhotoUrl().toString();
 
+               // sendData.putExtra("PERMISSION", )
+                sendData.putExtra("REQ_CODE",requestCode);
+                sendData.putExtra("RESULT_CODE",resultCode);
                 sendData.putExtra("USER_NAME", name);
                 sendData.putExtra("USER_EMAIL", email);
                 sendData.putExtra("IMG_URL", imgUrl);
 
-                isEmailValid(email);
                 startActivity(sendData);
 
             } catch (Exception e) {
-                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
-        } else {
-            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_SHORT).show();
+        } else if(requestCode==REQUEST_CODE_OPEN_ITEM){
+            if(resultCode==RESULT_OK){
+                DriveId driveId=data.getParcelableExtra
+                        (OpenFileActivityOptions.EXTRA_RESPONSE_DRIVE_ID);
+                openItemTask.setResult(driveId);
+            }else{
+                openItemTask.setException(new RuntimeException("Unable to open file"));
+            }
+
+        }else{
+            Toast.makeText(LoginActivity.this, "Login Failed", Toast.LENGTH_LONG).show();
         }
+        super.onActivityResult(requestCode,resultCode,data);
     }
 
     @Override
@@ -445,6 +501,24 @@ public class LoginActivity extends AppCompatActivity
         if (dialog != null && dialog.isShowing()) {
             dialog.hide();
         }
+    }
+    private void initializeDriveClient(GoogleSignInAccount signInAccount) {
+        driveClient = Drive.getDriveClient(this, signInAccount);
+        driveResClient = Drive.getDriveResourceClient(getApplicationContext(), signInAccount);
+       // onDriveClientReady();
+    }
+
+   /* @Override
+    protected void onDriveClientReady() {
+
+    }*/
+
+    protected DriveClient getDriveClient() {
+        return driveClient;
+    }
+
+    protected DriveResourceClient getDriveResourceClient() {
+        return driveResClient;
     }
 }
 
