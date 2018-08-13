@@ -56,10 +56,11 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton cameraBtn,createBtn;
     private Button uploadBtn,downloadBtn;
 
-
+    private String fieldId;
     private static String userName,userEmail,imgUrl;
     private Intent intent;
-
+    private static String ACTION_DRIVE_OPEN="com.google.android.apps.drive.DRIVE_OPEN";
+    private static final String EXTRA_FILE_ID = "resourceId";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +78,19 @@ public class MainActivity extends AppCompatActivity {
         usernameTV=(TextView)findViewById(R.id.usernameTxt);
         emailTv=(TextView)findViewById(R.id.emailTxt);
 
+        // Get the action that triggered the intent filter for this Activity
+        final Intent intent = getIntent();
+        final String action = intent.getAction();
+
+        // Make sure the Action is DRIVE_OPEN.
+        if (ACTION_DRIVE_OPEN.equals(action)) {
+            // Get the Drive file ID.
+            fieldId = intent.getStringExtra(EXTRA_FILE_ID);
+            getUserAccountAndProcessFile();
+        } else {
+            // Unknown action.
+            finish();
+        }
         setUserInfo();
         buttonOnclicks();
         // getSignInResult();
@@ -222,19 +236,19 @@ public class MainActivity extends AppCompatActivity {
         displayImg=(ImageView)findViewById(R.id.uploadingImgView);
 
         startActivityForResult(Intent.createChooser(intent, "Select Image"), CHOOSING_IMG_REQ);
-        displayImg.setImageResource(CHOOSING_IMG_REQ);
+        /*displayImg.setImageResource(CHOOSING_IMG_REQ);*/
 
     }
 
-    /*private void setUploadBtn(){
-        File file=new File("image/*");
+    private void setUploadBtn(){
+        /*File file=new File("image/*");
         java.io.File filePath = new java.io.File("image/*");
-        FileContent  mediaContent = new FileContent.get("image/jpeg", filePath);
+        FileContent mediaContent = new FileContent.get("image/jpeg", filePath);
         file = .files().insert(file, mediaContent)
                 .setFields("id")
                 .execute();
-        saveFileToDrive();
-    }*/
+        saveFileToDrive();*/
+    }
     protected void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
@@ -247,6 +261,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
+    private void getUserAccountAndProcessFile() {
+        // Implement the method.
+        throw new UnsupportedOperationException(
+                "The getUserAccountAndProcessFile method has not been implemented");
     }
 }
 
