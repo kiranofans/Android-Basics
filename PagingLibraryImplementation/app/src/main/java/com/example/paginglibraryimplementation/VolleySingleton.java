@@ -6,9 +6,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class VolleySingleton {
@@ -25,6 +27,9 @@ public class VolleySingleton {
     public static synchronized VolleySingleton getInstance(Context context){
         return volleySingleton = new VolleySingleton(context);
     }
+
+
+
 
     public void volleyGETRequest(String requestURL,final VolleyResultCallback mResultCallback){
         JsonObjectRequest jsonObj = new JsonObjectRequest(Request.Method.GET, requestURL, null, new
