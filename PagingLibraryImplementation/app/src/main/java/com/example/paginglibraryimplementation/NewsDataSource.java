@@ -33,11 +33,6 @@ public class NewsDataSource extends PageKeyedDataSource<Integer,NewsMod> {
     private VolleySingleton volleySingleton;
     private List<NewsMod> newsModList;
 
-    public NewsDataSource(Context context,List<NewsMod> newsList){
-
-        this.context = context;
-        newsModList=newsList;
-    }
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull final LoadInitialCallback<Integer, NewsMod> callback) {
