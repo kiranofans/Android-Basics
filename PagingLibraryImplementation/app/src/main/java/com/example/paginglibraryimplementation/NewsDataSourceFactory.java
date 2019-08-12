@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import androidx.paging.PageKeyedDataSource;
 
-public class NewsDataFactory extends DataSource.Factory {
+public class NewsDataSourceFactory extends DataSource.Factory {
     private MutableLiveData<PageKeyedDataSource<Integer, NewsMod>> newsLiveDataSource = new MutableLiveData<>();
 
     @NonNull

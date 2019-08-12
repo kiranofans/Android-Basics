@@ -1,6 +1,9 @@
 package com.example.paginglibraryimplementation;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.paging.PagedList;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,69 +19,34 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PagingAdapter pagingAdapter;
     private NewsMod newsMod;
-    private PagedList<News_list> pagedList;
-
-    private final String API_KEY = "c44b38deba074d9ab0fef1e359c80072";
-    private final String BASE_URL = "https://newsapi.org";
-    private final String CA_TOP_HEADLINES_URL = BASE_URL+
-            "/v2/top-headlines?country=ca&apiKey=" +API_KEY;
-
-
-    private VolleySingleton volleySingleton;
     private List<NewsMod> newsModList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        volleySingleton = VolleySingleton.getInstance(this);
         initContent();
-
     }
 
     private void initContent(){
-
-
-        getJson();
-
-    }
-
-    private void getJson(){
         newsModList = new ArrayList<>();
+        pagingAdapter = new PagingAdapter(getApplicationContext(), newsModList);
+        recyclerView = (RecyclerView)findViewById(R.id.news_recycler_view);
+        NewsViewModel viewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
 
-        volleySingleton.volleyGETRequest(CA_TOP_HEADLINES_URL, new VolleyResultCallback() {
+        viewModel.newsPagedList.observe(this, new Observer<PagedList<NewsMod>>() {
             @Override
-            public void jsonResponse(JSONObject response) {
-                try{
-                    JSONArray articleArr=response.getJSONArray("articles");
-                    for(int i =0;i<articleArr.length();i++){
-                        JSONObject jObj = articleArr.getJSONObject(i);
-                        String imgUrl = jObj.getString("urlToImage");
-                        String newsTitle = jObj.getString("title");
-                        newsMod = new NewsMod();
-
-                        newsMod.setImgURL(imgUrl); newsMod.setNewsName(newsTitle);
-                        newsModList.add(newsMod);
-                    }
-                    pagingAdapter = new PagingAdapter(getApplicationContext(), newsModList);
-                    recyclerView = (RecyclerView)findViewById(R.id.news_recycler_view);
-                    recyclerView.setAdapter(pagingAdapter);
-
-                }catch (JSONException je){}
-            }
-
-            @Override
-            public void responseError(VolleyError error) {
-
+            public void onChanged(PagedList<NewsMod> newsModList) {
+                pagingAdapter.submitList(newsModList);
+                Log.d("TAG",newsModList.toString());
             }
         });
 
+        recyclerView.setAdapter(pagingAdapter);
     }
 }

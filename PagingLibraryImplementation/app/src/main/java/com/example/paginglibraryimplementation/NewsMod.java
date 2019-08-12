@@ -3,11 +3,29 @@ package com.example.paginglibraryimplementation;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 import java.util.Observable;
 
 class NewsMod extends Observable {
-    private String imgURL, newsName, newsID;
+    @SerializedName("urlToImage")
+    @Expose
+    private String imgURL;
+
+    @SerializedName("title")
+    @Expose
+    private String newsName;
+
+    @SerializedName("articles")
+    private List<NewsMod> articleList;
+
+    private String newsID;
+
+    public List<NewsMod> getArticleList(){
+        return articleList;
+    }
 
     public String getImgURL() {
         return imgURL;

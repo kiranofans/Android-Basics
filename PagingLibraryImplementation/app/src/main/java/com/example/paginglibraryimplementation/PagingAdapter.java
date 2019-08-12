@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -39,12 +40,13 @@ public class PagingAdapter extends androidx.paging.PagedListAdapter<NewsMod,Pagi
     @Override
     public void onBindViewHolder(@NonNull PagingViewHolder holder, int position) {
         NewsMod newsMod = getItem(position);
-
-        holder.newsTitleTV.setText(newsMod.getNewsName());
-        Picasso.get().load(newsMod.getImgURL()).centerCrop().into(holder.imgViews);
-        //holder.imgViews.setImageResource(R.mipmap._MG_2376);
+        if(newsMod!=null){
+            holder.newsTitleTV.setText(newsMod.getNewsName());
+            Picasso.get().load(newsMod.getImgURL()).centerCrop().into(holder.imgViews);
+        }else{
+            Toast.makeText(context,"News is null",Toast.LENGTH_SHORT).show();
+        }
     }
-
 
     public class PagingViewHolder extends RecyclerView.ViewHolder{
 
@@ -65,6 +67,5 @@ public class PagingAdapter extends androidx.paging.PagedListAdapter<NewsMod,Pagi
     public int getItemCount() {
         return newsList.size();
     }
-
 
 }
