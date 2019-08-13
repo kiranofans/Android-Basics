@@ -1,11 +1,10 @@
 package project.android_projects.com.retrofit2implementation;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
-import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,48 +22,41 @@ public class MainActivity extends AppCompatActivity {
     private RetrofitAPIService service;
     private List<NewsModResponse.Article> resultList;
 
-    private NewsModResponse newsMod;
     private NewsModResponse.Article articleMod;
-
-    public MainActivity() {
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initContent(this);
+        loadData();
     }
 
-    private void initContent(final Context context){
-        loadData(context);
-    }
-
-    private void loadData(final Context context){
+    private void loadData() {
         resultList = new ArrayList<>();
+
         service = ApiUtils.getService();
-        Call<NewsModResponse> call = service.getArticlesList("us",
-                "business", ApiConstants.API_KEY);
+        Call<NewsModResponse> call = service.getArticlesList("ca",
+                50, "business", ApiConstants.API_KEY);//need to
 
         call.enqueue(new Callback<NewsModResponse>() {
             @Override
             public void onResponse(Call<NewsModResponse> call, Response<NewsModResponse> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     resultList = response.body().getArticleList();//get the list
-                    for(int i = 0; i< resultList.size(); i++){
+                    for (int i = 0; i < resultList.size(); i++) {
+                        /**Use a for loop and Object class to get certain
+                         * objects from this articles array*/
                         Object obj = response.body().getArticleList().get(i);
                         String title = ((NewsModResponse.Article) obj).getTitle();
                         String imgUrl = ((NewsModResponse.Article) obj).getUrlToImage();
 
                         articleMod = new NewsModResponse.Article(title, imgUrl);
 
-                        resultList.add(articleMod);
                     }
-
-                    generateList(resultList, context);
+                    resultList.add(articleMod);
+                    generateList(resultList);
                 }
-
             }
 
             @Override
@@ -74,10 +66,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void generateList(List<NewsModResponse.Article> list, Context context){
-        adapter = new MyRecyclerViewAdapter(context,resultList);
+    private void generateList(List<NewsModResponse.Article> list) {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+
+        adapter = new MyRecyclerViewAdapter(this, list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
         recyclerView.setAdapter(adapter);
     }
 }

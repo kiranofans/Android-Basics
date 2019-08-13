@@ -81,6 +81,10 @@ public class NewsModResponse {
             this.urlToImage = imgUrl;
         }
 
+        public Article(String title) {
+            this.title = title;
+        }
+
         public Source getSource() {
             return source;
         }
