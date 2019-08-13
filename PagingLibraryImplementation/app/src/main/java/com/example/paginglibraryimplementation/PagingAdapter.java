@@ -24,10 +24,10 @@ public class PagingAdapter extends androidx.paging.PagedListAdapter<NewsMod,Pagi
     private LayoutInflater inflater;
     private List<NewsMod> newsList;
 
-    public PagingAdapter (Context context,List<NewsMod> newsList){
+    public PagingAdapter (Context context){
         super(NewsMod.CALLBACK);
         this.context = context;
-        this.newsList = newsList;
+        //this.newsList = newsList;
     }
 
     @NonNull

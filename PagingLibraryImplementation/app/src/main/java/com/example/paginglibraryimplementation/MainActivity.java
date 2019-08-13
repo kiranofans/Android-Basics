@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initContent(){
         newsModList = new ArrayList<>();
-        pagingAdapter = new PagingAdapter(getApplicationContext(), newsModList);
+        pagingAdapter = new PagingAdapter(getApplicationContext());
         recyclerView = (RecyclerView)findViewById(R.id.news_recycler_view);
         NewsViewModel viewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(PagedList<NewsMod> newsModList) {
                 pagingAdapter.submitList(newsModList);
-                Log.d("TAG",newsModList.toString());
+                //Log.d("TAG",newsModList.toString());
             }
         });
 

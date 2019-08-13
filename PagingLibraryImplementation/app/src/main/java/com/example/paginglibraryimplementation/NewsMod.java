@@ -19,6 +19,7 @@ class NewsMod extends Observable {
     private String newsName;
 
     @SerializedName("articles")
+    @Expose
     private List<NewsMod> articleList;
 
     private String newsID;
@@ -53,6 +54,10 @@ class NewsMod extends Observable {
         this.newsID = newsID;
         setChanged();
         notifyObservers();
+    }
+
+    public void setArticleList(List<NewsMod> articleList) {
+        this.articleList = articleList;
     }
 
     public static final DiffUtil.ItemCallback<NewsMod> CALLBACK = new DiffUtil.ItemCallback<NewsMod>() {
