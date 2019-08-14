@@ -12,7 +12,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NewsDataSource extends PageKeyedDataSource<Integer,NewsMod> {
+public class NewsDataSource extends PageKeyedDataSource<Integer, NewsMod> {
     private Context context;
 
     public static final int PAGE_SIZE = 50;
@@ -21,24 +21,26 @@ public class NewsDataSource extends PageKeyedDataSource<Integer,NewsMod> {
 
     private RetrofitClient retrofitClient = RetrofitClient.getInstance();
 
-    private List<NewsMod.ArticleMod> newsModList;
-    private Call<NewsMod> call;
-    public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull final LoadInitialCallback<Integer, NewsMod> callback) {
+    private List<NewsMod> newsModList;
+    private Call<ArticleResponse> call;
+
+    public void loadInitial(@NonNull LoadInitialParams<Integer> params,
+                            @NonNull final LoadInitialCallback<Integer, NewsMod> callback) {
         call = retrofitClient.getApi().getArticlesList
-                ("ca","business", API_KEY,FIRST_PAGE,PAGE_SIZE);
+                ("ca", "business", API_KEY, FIRST_PAGE, PAGE_SIZE);
 
         //Will be called once, load initial data
-        call.enqueue(new Callback<NewsMod>() {
+        call.enqueue(new Callback<ArticleResponse>() {
             @Override
-            public void onResponse(Call<NewsMod> call, Response<NewsMod> response) {
-                if(response.body() != null){
-                    newsModList = response.body().getArticleList();
-                    callback.onResult(newsModList, null, FIRST_PAGE+1);
+            public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
+                if (response.body() != null) {
+                    newsModList = response.body();
+                    callback.onResult(newsModList, null, FIRST_PAGE + 1);
                 }
             }
 
             @Override
-            public void onFailure(Call<NewsMod> call, Throwable t) {
+            public void onFailure(Call<ArticleResponse> call, Throwable t) {
 
             }
         });
@@ -46,47 +48,47 @@ public class NewsDataSource extends PageKeyedDataSource<Integer,NewsMod> {
 
     @Override
     public void loadBefore(@NonNull final LoadParams<Integer> params,
-                           @NonNull final LoadCallback<Integer, NewsMod.ArticleMod> callback) {
+                           @NonNull final LoadCallback<Integer, NewsMod> callback) {
         call = retrofitClient.getApi().getArticlesList
-                ("ca","business", API_KEY,FIRST_PAGE,PAGE_SIZE);
+                ("ca", "business", API_KEY, FIRST_PAGE, PAGE_SIZE);
         //Load previous data
-        call.enqueue(new Callback<NewsMod>() {
-                    @Override
-                    public void onResponse(Call<NewsMod> call, Response<NewsMod> response) {
-                        //if the current page is greater than one
-                        //we are decrementing the page number
-                        //else there is no previous page
-                        if(response.body() != null){
-                            newsModList=response.body().getArticleList();
-                            Integer adjacentKey = (params.key > 1)?params.key -1 : null;
-                            callback.onResult(newsModList, adjacentKey);
-                        }
-                    }
+        call.enqueue(new Callback<List<ArticleResponse>>() {
+            @Override
+            public void onResponse(Call<List<ArticleResponse>> call, Response<List<ArticleResponse>> response) {
+                //if the current page is greater than one
+                //we are decrementing the page number
+                //else there is no previous page
+                if (response.body() != null) {
+                    newsModList = response.body();
+                    Integer adjacentKey = (params.key > 1) ? params.key - 1 : null;
+                    callback.onResult(newsModList, adjacentKey);
+                }
+            }
 
-                    @Override
-                    public void onFailure(Call<NewsMod> call, Throwable t) {
-                        Log.d("Failure", "Failed to load data");
-                    }
-                });
+            @Override
+            public void onFailure(Call<List<ArticleResponse>> call, Throwable t) {
+                Log.d("Failure", "Failed to load data");
+            }
+        });
     }
 
     public void loadAfter(@NonNull final LoadParams<Integer> params,
-                          @NonNull final LoadCallback<Integer, NewsMod.ArticleMod> callback) {
+                          @NonNull final LoadCallback<Integer, NewsMod> callback) {
         call = retrofitClient.getApi().getArticlesList
-                ("ca","business", API_KEY,FIRST_PAGE,PAGE_SIZE);
-        call.enqueue(new Callback<NewsMod>() {
-                    @Override
-                    public void onResponse(Call<NewsMod> call, Response<NewsMod> response) {
-                        //if the current page is greater than one
-                        //we are decrementing the page number
-                        //else there is no previous page
+                ("ca", "business", API_KEY, FIRST_PAGE, PAGE_SIZE);
+        call.enqueue(new Callback<ArticleResponse>() {
+            @Override
+            public void onResponse(Call<ArticleResponse> call, Response<ArticleResponse> response) {
+                //if the current page is greater than one
+                //we are decrementing the page number
+                //else there is no previous page
 
-                    }
+            }
 
-                    @Override
-                    public void onFailure(Call<NewsMod> call, Throwable t) {
-                        Log.d("Failure", "Failed to load data");
-                    }
-                });
+            @Override
+            public void onFailure(Call<ArticleResponse> call, Throwable t) {
+                Log.d("Failure", "Failed to load data");
+            }
+        });
     }
 }
