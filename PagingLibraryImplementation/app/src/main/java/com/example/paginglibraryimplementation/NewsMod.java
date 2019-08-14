@@ -9,6 +9,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Observable;
 
+import Models.Source;
+
 class NewsMod extends Observable {
     @SerializedName("urlToImage")
     @Expose
@@ -20,11 +22,11 @@ class NewsMod extends Observable {
 
     @SerializedName("articles")
     @Expose
-    private List<NewsMod> articleList;
+    private List<ArticleMod> articleList;
 
     private String newsID;
 
-    public List<NewsMod> getArticleList(){
+    public List<ArticleMod> getArticleList() {
         return articleList;
     }
 
@@ -50,32 +52,131 @@ class NewsMod extends Observable {
         notifyObservers();
     }
 
-    public void setNewsID(String newsID) {
-        this.newsID = newsID;
-        setChanged();
-        notifyObservers();
-    }
 
-    public void setArticleList(List<NewsMod> articleList) {
+    public void setArticleList(List<ArticleMod> articleList) {
         this.articleList = articleList;
     }
 
-    public static final DiffUtil.ItemCallback<NewsMod> CALLBACK = new DiffUtil.ItemCallback<NewsMod>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull NewsMod oldItem, @NonNull NewsMod newItem) {
-            return oldItem.getNewsID()==newItem.getNewsID();
+    public class ArticleMod {
+        @SerializedName("source")
+        @Expose
+        private Source source;
+
+        @SerializedName("author")
+        @Expose
+        private String author;
+
+        @SerializedName("title")
+        @Expose
+        private String title;
+
+        @SerializedName("description")
+        @Expose
+        private String description;
+
+        @SerializedName("url")
+        @Expose
+        private String url;
+
+        @SerializedName("urlToImage")
+        @Expose
+        private String urlToImage;
+
+        @SerializedName("publishedAt")
+        @Expose
+        private String publishedAt;
+
+        @SerializedName("content")
+        @Expose
+        private String content;
+
+        public ArticleMod(String title, String imgUrl) {
+            this.title = title;
+            this.urlToImage = imgUrl;
         }
 
-        @Override
-        public boolean areContentsTheSame(@NonNull NewsMod oldItem, @NonNull NewsMod newItem) {
-            return true;
+        public ArticleMod(String title) {
+            this.title = title;
         }
-    };
 
-    public class ApiResponse{
-        public List<NewsMod> newsList;
-        public boolean hasMore;
-        public int quota_max;
-        public int quota_remaining;
+        public Source getSource() {
+            return source;
+        }
+
+        public void setSource(Source source) {
+            this.source = source;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public void setAuthor(String author) {
+            this.author = author;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getUrl() {
+            return url;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public String getUrlToImage() {
+            return urlToImage;
+        }
+
+        public void setUrlToImage(String urlToImage) {
+            this.urlToImage = urlToImage;
+        }
+
+        public String getPublishedAt() {
+            return publishedAt;
+        }
+
+        public void setPublishedAt(String publishedAt) {
+            this.publishedAt = publishedAt;
+        }
+
+        public String getContent() {
+            return content;
+        }
+
+        public void setContent(String content) {
+            this.content = content;
+        }
+
     }
+
+    public static final DiffUtil.ItemCallback<ArticleMod> CALLBACK =
+            new DiffUtil.ItemCallback<ArticleMod>() {
+                @Override
+                public boolean areItemsTheSame(@NonNull ArticleMod oldItem,
+                                               @NonNull ArticleMod newItem) {
+                    return oldItem.getSource().getId() == newItem.getSource().getId();
+                }
+
+                @Override
+                public boolean areContentsTheSame(@NonNull ArticleMod oldItem,
+                                                  @NonNull ArticleMod newItem) {
+                    return true;
+                }
+            };
 }

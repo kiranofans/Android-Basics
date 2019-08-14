@@ -9,8 +9,9 @@ import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 public interface Api {
-    @GET("/v2/top-headlines?country=us&category=business")
-    Call<List<NewsMod>> getArticlesList
-            (@Query("api_key")String api_key,@Query("page") int page,
-             @Query("pagesize") int pageSize);
+    @GET("/v2/top-headlines")
+    Call<NewsMod> getArticlesList
+            (@Query("country")String country,@Query("category") String category,
+             @Query("apiKey")String api_key,@Query("page") int page,
+             @Query("pageSize") int pageSize);
 }
