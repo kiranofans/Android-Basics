@@ -6,11 +6,12 @@ import androidx.paging.DataSource;
 import androidx.paging.PageKeyedDataSource;
 
 public class NewsDataSourceFactory extends DataSource.Factory {
-    private MutableLiveData<PageKeyedDataSource<Integer, NewsMod>> newsLiveDataSource = new MutableLiveData<>();
+    private MutableLiveData<PageKeyedDataSource<Integer, ArticleResponse>> newsLiveDataSource =
+            new MutableLiveData<>();
 
     @NonNull
     @Override
-    public DataSource<Integer, NewsMod> create() {
+    public DataSource<Integer, ArticleResponse> create() {
         //getting our data source object
         NewsDataSource newsDataSource = new NewsDataSource();
 
@@ -22,7 +23,7 @@ public class NewsDataSourceFactory extends DataSource.Factory {
     }
 
     //getter for newsliveDataSource
-    public MutableLiveData<PageKeyedDataSource<Integer, NewsMod>> getNewsLiveDataSource(){
+    public MutableLiveData<PageKeyedDataSource<Integer, ArticleResponse>> getNewsLiveDataSource(){
         return newsLiveDataSource;
     }
 }

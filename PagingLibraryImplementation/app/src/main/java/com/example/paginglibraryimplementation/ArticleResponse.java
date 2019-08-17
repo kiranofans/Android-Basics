@@ -113,19 +113,4 @@ public class ArticleResponse {
     public void setContent(String content) {
         this.content = content;
     }
-
-    public static final DiffUtil.ItemCallback<ArticleResponse> CALLBACK =
-            new DiffUtil.ItemCallback<ArticleResponse>() {
-                @Override
-                public boolean areItemsTheSame(@NonNull ArticleResponse oldItem,
-                                               @NonNull ArticleResponse newItem) {
-                    return oldItem.getSource().getId() == newItem.getSource().getId();
-                }
-
-                @Override
-                public boolean areContentsTheSame(@NonNull ArticleResponse oldItem,
-                                                  @NonNull ArticleResponse newItem) {
-                    return true;
-                }
-            };
 }

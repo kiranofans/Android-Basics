@@ -7,8 +7,8 @@ import androidx.paging.PageKeyedDataSource;
 import androidx.paging.PagedList;
 
 public class NewsViewModel extends ViewModel {
-    LiveData<PagedList<NewsMod>> newsPagedList;
-    LiveData<PageKeyedDataSource<Integer,NewsMod>> newsLiveDataSource;
+    LiveData<PagedList<ArticleResponse>> newsPagedList;
+    LiveData<PageKeyedDataSource<Integer,ArticleResponse>> newsLiveDataSource;
 
     public NewsViewModel(){
         NewsDataSourceFactory newsDataFactory = new NewsDataSourceFactory();
