@@ -1,9 +1,12 @@
-package com.example.paginglibraryimplementation;
+package Utils;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import androidx.paging.PageKeyedDataSource;
+
+import com.example.paginglibraryimplementation.ArticleResponse;
+import com.example.paginglibraryimplementation.NewsDataSource;
 
 public class NewsDataSourceFactory extends DataSource.Factory {
     private MutableLiveData<PageKeyedDataSource<Integer, ArticleResponse>> newsLiveDataSource =

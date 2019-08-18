@@ -1,4 +1,4 @@
-package com.example.paginglibraryimplementation;
+package Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +13,8 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.bumptech.glide.Glide;
+import com.example.paginglibraryimplementation.ArticleResponse;
+import com.example.paginglibraryimplementation.R;
 
 import java.util.List;
 
@@ -40,10 +42,9 @@ public class PagingAdapter extends androidx.paging.PagedListAdapter
                 }
             };
 
-    public PagingAdapter(Context context, PagedList<ArticleResponse> newsList) {
+    public PagingAdapter(Context context) {
         super(CALLBACK);
         this.context = context;
-        this.newsList = newsList;
     }
 
     @NonNull
@@ -56,7 +57,8 @@ public class PagingAdapter extends androidx.paging.PagedListAdapter
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
-        holder.bind(newsList.get(position));
+        ArticleResponse articleResponse = getItem(position);
+        holder.bind(articleResponse);
     }
 
     public class PagingViewHolder extends BaseViewHolder<ArticleResponse> {
@@ -69,8 +71,6 @@ public class PagingAdapter extends androidx.paging.PagedListAdapter
 
             newsTitleTV = (TextView) itemView.findViewById(R.id.txt_news_name);
             imgViews = (ImageView) itemView.findViewById(R.id.img_news_banner);
-
-
         }
 
         @Override
@@ -79,11 +79,4 @@ public class PagingAdapter extends androidx.paging.PagedListAdapter
             Glide.with(context).load(object.getUrlToImage()).into(imgViews);
         }
     }
-
-    @Override
-    public int getItemCount() {
-        return newsList.size();
-    }
-
-
 }

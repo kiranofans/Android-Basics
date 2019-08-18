@@ -14,7 +14,7 @@ import retrofit2.Response;
 
 public class NewsDataSource extends PageKeyedDataSource<Integer, ArticleResponse> {
 
-    public static final int PAGE_SIZE = 50;
+    public static final int PAGE_SIZE = 100;
     private static final int FIRST_PAGE = 1;
     private static final String API_KEY = "c44b38deba074d9ab0fef1e359c80072";
 
