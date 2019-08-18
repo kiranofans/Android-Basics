@@ -1,12 +1,7 @@
-package com.example.paginglibraryimplementation;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
+package Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import Models.Source;
 
 public class ArticleResponse {
     @SerializedName("source")

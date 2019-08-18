@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import Adapter.PagingAdapter;
+import Models.ArticleResponse;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;

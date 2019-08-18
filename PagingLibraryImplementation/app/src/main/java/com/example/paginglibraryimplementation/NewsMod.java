@@ -8,6 +8,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import Models.ArticleResponse;
+
 class NewsMod implements Parcelable {
     @SerializedName("urlToImage")
     @Expose
@@ -22,8 +24,8 @@ class NewsMod implements Parcelable {
     private List<ArticleResponse> articleList;
 
 
-    public NewsMod(){}
-
+    public NewsMod() {
+    }
 
     private String newsID;
 

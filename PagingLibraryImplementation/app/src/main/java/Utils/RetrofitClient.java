@@ -1,4 +1,6 @@
-package com.example.paginglibraryimplementation;
+package Utils;
+
+import com.example.paginglibraryimplementation.Api;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

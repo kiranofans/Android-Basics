@@ -6,13 +6,14 @@ import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PageKeyedDataSource;
 import androidx.paging.PagedList;
 
+import Models.ArticleResponse;
 import Utils.NewsDataSourceFactory;
 
 public class NewsViewModel extends ViewModel {
     LiveData<PagedList<ArticleResponse>> newsPagedList;
-    LiveData<PageKeyedDataSource<Integer,ArticleResponse>> newsLiveDataSource;
+    LiveData<PageKeyedDataSource<Integer, ArticleResponse>> newsLiveDataSource;
 
-    public NewsViewModel(){
+    public NewsViewModel() {
         NewsDataSourceFactory newsDataFactory = new NewsDataSourceFactory();
 
         newsLiveDataSource = newsDataFactory.getNewsLiveDataSource();
@@ -20,7 +21,7 @@ public class NewsViewModel extends ViewModel {
         PagedList.Config pagingConfig = (new PagedList.Config.Builder())
                 .setEnablePlaceholders(false).setPageSize(NewsDataSource.PAGE_SIZE).build();
 
-        newsPagedList = (new LivePagedListBuilder(newsDataFactory,pagingConfig)).build();
+        newsPagedList = (new LivePagedListBuilder(newsDataFactory, pagingConfig)).build();
     }
 
 }

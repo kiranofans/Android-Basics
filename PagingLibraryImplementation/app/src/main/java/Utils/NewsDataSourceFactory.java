@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import androidx.paging.PageKeyedDataSource;
 
-import com.example.paginglibraryimplementation.ArticleResponse;
+import Models.ArticleResponse;
 import com.example.paginglibraryimplementation.NewsDataSource;
 
 public class NewsDataSourceFactory extends DataSource.Factory {

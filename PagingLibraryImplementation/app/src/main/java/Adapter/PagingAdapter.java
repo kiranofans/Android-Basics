@@ -8,16 +8,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
-import androidx.paging.PagedList;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.bumptech.glide.Glide;
-import com.example.paginglibraryimplementation.ArticleResponse;
 import com.example.paginglibraryimplementation.R;
 
-import java.util.List;
-
+import Models.ArticleResponse;
 import Utils.BaseViewHolder;
 
 public class PagingAdapter extends androidx.paging.PagedListAdapter
@@ -25,7 +21,6 @@ public class PagingAdapter extends androidx.paging.PagedListAdapter
 
     private Context context;
     private LayoutInflater inflater;
-    private List<ArticleResponse> newsList;
 
     public static final DiffUtil.ItemCallback<ArticleResponse> CALLBACK =
             new DiffUtil.ItemCallback<ArticleResponse>() {
@@ -50,7 +45,7 @@ public class PagingAdapter extends androidx.paging.PagedListAdapter
     @NonNull
     @Override
     public PagingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new PagingViewHolder(LayoutInflater.from(parent.getContext()).inflate
+        return new PagingViewHolder(inflater.from(parent.getContext()).inflate
                 (R.layout.paging_items_layout, parent, false));
     }
 

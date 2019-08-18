@@ -8,6 +8,8 @@ import androidx.paging.PageKeyedDataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+import Models.ArticleResponse;
+import Utils.RetrofitClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
