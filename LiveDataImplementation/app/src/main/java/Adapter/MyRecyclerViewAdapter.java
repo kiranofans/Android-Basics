@@ -17,13 +17,13 @@ import java.util.List;
 import Model.NewsMod;
 import project.android_projects.com.livedataimplementation.R;
 
-public class LiveDataRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewModel> {
+public class MyRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewModel> {
     private static final String TAG = "LiveDataAdapter";
 
     private List<NewsMod.ArticleMod> articleList;
     private Context context;
 
-    public LiveDataRecyclerViewAdapter(Context context,List<NewsMod.ArticleMod> list) {
+    public MyRecyclerViewAdapter(Context context, List<NewsMod.ArticleMod> list) {
         this.context = context;
         articleList = list;
     }
@@ -42,7 +42,7 @@ public class LiveDataRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewMo
 
     @Override
     public int getItemCount() {
-
+        //Null check
         if (articleList != null && articleList.size() > 0) {
             return articleList.size();
         }
