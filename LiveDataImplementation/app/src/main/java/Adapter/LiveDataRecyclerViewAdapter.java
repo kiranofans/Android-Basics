@@ -1,6 +1,7 @@
 package Adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -30,7 +31,8 @@ public class LiveDataRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewMo
     @NonNull
     @Override
     public BaseViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        return new LiveDataViewHolder(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.items_layout, parent,false));
     }
 
     @Override
