@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class NewsModWrapper {
+public class NewsMod {
     @SerializedName("status")
     @Expose
     private String status;
