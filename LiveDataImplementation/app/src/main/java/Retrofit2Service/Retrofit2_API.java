@@ -10,9 +10,9 @@ public interface Retrofit2_API {
 
     @GET(APIConstants.END_POINT_TOP_HEADLINES)
     Call<NewsMod> getTopHeadLines(@Query("country") String country, @Query("category") String category,
-                                  @Query("apiKey") String api_key, @Query("pageSize") String pageSize);
+                                  @Query("apiKey") String api_key, @Query("pageSize") int pageSize);
 
     @GET(APIConstants.END_POINT_EVERYTHING)
-    Call<NewsMod> getEverything(@Query("apiKey") String api_key, @Query("pageSize") String pageSize,
+    Call<NewsMod> getEverything(@Query("apiKey") String api_key, @Query("pageSize") int pageSize,
                                 @Query("sortBy") String sort_by);
 }
