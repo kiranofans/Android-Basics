@@ -44,18 +44,19 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<NewsModResponse> call, Response<NewsModResponse> response) {
                 if (response.isSuccessful()) {
                     resultList = response.body().getArticleList();//get the list
-                    for (int i = 0; i < resultList.size(); i++) {
-                        /**Use a for loop and Object class to get certain
-                         * objects from this articles array*/
+                    generateList(resultList);
+
+                    /*for (int i = 0; i < resultList.size(); i++) {
+                     *//**Can also use a for loop and Object class to get certain
+                     * objects from this articles array*//*
                         Object obj = response.body().getArticleList().get(i);
                         String title = ((NewsModResponse.Article) obj).getTitle();
                         String imgUrl = ((NewsModResponse.Article) obj).getUrlToImage();
 
                         articleMod = new NewsModResponse.Article(title, imgUrl);
 
-                    }
-                    resultList.add(articleMod);
-                    generateList(resultList);
+                    }*/
+                    //resultList.add(articleMod);
                 }
             }
 
