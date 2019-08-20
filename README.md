@@ -15,3 +15,5 @@
 
 -Fragment communication using ViewModel (Completed)
 
+-Fragment communication using Interface (Completed)
+
