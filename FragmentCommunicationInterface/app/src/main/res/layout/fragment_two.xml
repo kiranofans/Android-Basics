@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="14dp"
+    android:layout_margin="8dp"
+    android:background="@android:color/holo_orange_light">
+
+    <TextView
+        android:id="@+id/result_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:padding="4dp"
+        android:layout_centerVertical="true"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:text="Texts displays here..."/>
+
+</RelativeLayout>
