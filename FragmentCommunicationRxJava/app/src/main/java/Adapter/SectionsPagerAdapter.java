@@ -1,4 +1,4 @@
-package project.android_projects.com.fragmentcommunicationrxjava.ui.main;
+package Adapter;
 
 import android.content.Context;
 
@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import project.android_projects.com.fragmentcommunicationrxjava.FirstFragment;
 import project.android_projects.com.fragmentcommunicationrxjava.R;
+import project.android_projects.com.fragmentcommunicationrxjava.SecondFragment;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -28,8 +30,12 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+        // Return a FirstFragment (defined as a static inner class below).
+        if(position == 0){
+            return FirstFragment.newInstance();
+        }else{
+            return SecondFragment.newInstance();
+        }
     }
 
     @Nullable
