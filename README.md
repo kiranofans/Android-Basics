@@ -9,7 +9,7 @@
 -Bluetooth connection sample
 
 ## Four main ways of fragment communication
--Fragment communication using EventBus 
+-Fragment communication using EventBus (Completed)
 
 -Fragment communication using RxJava (Completed)
 
