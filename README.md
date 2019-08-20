@@ -13,3 +13,5 @@
 
 -Fragment communication using RxJava (Completed)
 
+-Fragment communication using ViewModel (Completed)
+
