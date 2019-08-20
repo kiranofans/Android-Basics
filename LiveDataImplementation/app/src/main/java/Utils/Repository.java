@@ -1,6 +1,8 @@
 package Utils;
 
 import android.app.Application;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -35,10 +37,10 @@ public class Repository {
                 100, APPConstants.PARAM_SORT_BY);
 
         Call<NewsMod> callHeadLines = apiService.getTopHeadLines
-                (APPConstants.PARAM_COUNTRY_USA, APPConstants.PARAM_CATEGORY_BITCOIN,
+                (APPConstants.PARAM_COUNTRY_USA, APPConstants.PARAM_CATEGORY_BUSINESS,
                         APIConstants.API_KEY, 100);
 
-        callEverything.enqueue(new Callback<NewsMod>() {
+        callHeadLines.enqueue(new Callback<NewsMod>() {
             @Override
             public void onResponse(Call<NewsMod> call, Response<NewsMod> response) {
                 NewsMod newsMod = response.body();
@@ -46,6 +48,7 @@ public class Repository {
                     articleList = newsMod.getArticleList();
                     mutableLiveData.setValue(articleList);
                 }
+                Log.d("CHECK NULL", response.body()+" is null");
             }
 
             @Override

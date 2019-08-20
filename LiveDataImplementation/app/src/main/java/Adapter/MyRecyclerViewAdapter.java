@@ -37,7 +37,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewModel> {
 
     @Override
     public void onBindViewHolder(@NonNull BaseViewModel holder, int position) {
-        holder.bind(position);
+        holder.bind(articleList.get(position));
     }
 
     @Override
@@ -60,10 +60,11 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewModel> {
             newsImgView = itemView.findViewById(R.id.news_img_view);
         }
 
-        protected void clearData() {
+        /*@Override
+        protected void clear() {
             newsImgView.setImageDrawable(null);
             titleTV.setText("");
-        }
+        }*/
 
         @Override
         public void bind(NewsMod.ArticleMod obj) {
