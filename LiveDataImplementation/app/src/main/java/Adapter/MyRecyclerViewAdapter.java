@@ -32,7 +32,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewModel> {
     @Override
     public BaseViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new LiveDataViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.items_layout, parent,false));
+                .inflate(R.layout.items_layout, parent, false));
     }
 
     @Override
@@ -60,16 +60,17 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<BaseViewModel> {
             newsImgView = itemView.findViewById(R.id.news_img_view);
         }
 
-        /*@Override
+        @Override
         protected void clear() {
             newsImgView.setImageDrawable(null);
             titleTV.setText("");
-        }*/
+        }
 
         @Override
         public void bind(NewsMod.ArticleMod obj) {
             titleTV.setText(obj.getTitle());
-            Glide.with(context).load(obj.getUrlToImage()).into(newsImgView);
+            Glide.with(context).load(obj.getUrlToImage())
+                    .into(newsImgView);
         }
     }
 }

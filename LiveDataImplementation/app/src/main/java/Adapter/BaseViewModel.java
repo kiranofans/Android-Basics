@@ -12,7 +12,9 @@ public abstract class BaseViewModel<T> extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    //protected abstract void clear();
+    protected abstract void clear();
 
-    public abstract void bind(T obj);
+    public void bind(T obj) {
+        clear();
+    }
 }
