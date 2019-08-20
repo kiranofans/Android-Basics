@@ -18,10 +18,11 @@
             android:src="@drawable/ic_launcher_background" />
 
         <EditText
-            android:id="@+id/text_input_box"
+            android:id="@+id/txt_input_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:hint="Enter some text here..."
             android:background="@android:drawable/editbox_background" />
 
     </LinearLayout>
