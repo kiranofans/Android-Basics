@@ -22,10 +22,15 @@ public class FragmentReceiveText extends Fragment {
     private TextView resultTV;
 
     private Context context;
+    private static FragmentReceiveText instance;
 
-    public FragmentReceiveText(Context context) {
+    public FragmentReceiveText() {
         // Required empty public constructor
-        this.context = context;
+        //this.context = context;
+    }
+
+    public static FragmentReceiveText getInstance(){
+        return new FragmentReceiveText();
     }
 
     @Override

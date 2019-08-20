@@ -28,10 +28,15 @@ public class FragmentSendText extends Fragment {
     private EditText editText;
 
     private Context context;
+    private static FragmentSendText sendInstance;
 
-    public FragmentSendText(Context context) {
+    public FragmentSendText() {
         // Required empty public constructor
-        this.context = context;
+        //this.context = context;
+    }
+
+    public static FragmentSendText getInstance(){
+        return new FragmentSendText();
     }
 
     @Override

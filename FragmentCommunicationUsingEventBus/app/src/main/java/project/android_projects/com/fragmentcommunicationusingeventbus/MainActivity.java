@@ -21,32 +21,25 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fragmentMgr= getSupportFragmentManager();
+        fragmentTrans = fragmentMgr.beginTransaction();
 
-        //initContent();
-        initSendFragment(new FragmentSendText(this));
-        initReceiveFragment(new FragmentReceiveText(this));
+        initSendFragment();
+        initReceiveFragment();
+        fragmentTrans.commit();
     }
 
-    private void initContent(){
-       /* fragmentReceive = FragmentReceiveText.getInstance();
-        fragmentSend = FragmentSendText.getInstance();*/
-        fragmentMgr.findFragmentById(R.id.receive_fragment);
-        fragmentMgr.findFragmentById(R.id.send_fragment);
-    }
+    private void initSendFragment(){
+        fragmentSend = new FragmentSendText();
+        if(fragmentSend != null){
+            fragmentTrans.add(R.id.send_fragment, fragmentSend);
 
-    private void initSendFragment(Fragment fragment){
-        if(fragment != null){
-            //fragmentMgr=getSupportFragmentManager();
-            fragmentMgr.beginTransaction().replace(R.id.send_fragment,
-                    new FragmentReceiveText(this)).commit();
         }
     }
 
-    private void initReceiveFragment(Fragment fragment){
-        if(fragment != null){
-            //fragmentMgr=getSupportFragmentManager();
-            fragmentMgr.beginTransaction().replace(R.id.receive_fragment,
-                    new FragmentReceiveText(this)).commit();
+    private void initReceiveFragment(){
+        fragmentReceive = new FragmentReceiveText();
+        if(fragmentReceive != null){
+            fragmentTrans.add(R.id.receive_fragment, fragmentReceive);
         }
     }
 }
