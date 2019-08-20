@@ -6,19 +6,35 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+        <!--Better to use FrameLayout for including Fragments
+         onto Activities;
+         Use <include> tags for fragment layouts will be confusing,
+         include tags are usually for activity layouts-->
         <FrameLayout
             android:id="@+id/send_fragment"
-            android:layout_height="200dp"
-            android:layout_width="match_parent"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp" />
 
         <FrameLayout
             android:id="@+id/receive_fragment"
-            android:layout_height="200dp"
-            android:layout_width="match_parent"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp" />
+
+        <Button
+            android:id="@+id/reset_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:background="@android:drawable/btn_default_small"
+            android:text="Reset" />
     </LinearLayout>
 
 </RelativeLayout>
