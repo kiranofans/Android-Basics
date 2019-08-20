@@ -8,19 +8,18 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:text="Hello World!" >
+        android:orientation="vertical" >
 
         <include layout="@layout/fragment_send_layout"
             android:id="@+id/send_fragment"
-            android:layout_height="300dp"
-            android:layout_margin="12dp"
+            android:layout_height="200dp"
+            android:layout_margin="4dp"
             android:layout_width="match_parent"/>
 
         <include layout="@layout/fragment_receive_layout"
             android:id="@+id/receive_fragment"
-            android:layout_height="300dp"
-            android:layout_margin="12dp"
+            android:layout_height="200dp"
+            android:layout_margin="4dp"
             android:layout_width="match_parent"/>
     </LinearLayout>
 
