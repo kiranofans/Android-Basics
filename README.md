@@ -5,4 +5,6 @@
 
 -Live data implementation with Retrofit 2
 
+-Fragment communication using EventBus 
+
 -Bluetooth connection sample
