@@ -26,8 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
     private SwipeRefreshLayout swipeRefresh;
 
-    private List<NewsMod.ArticleMod> list;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,12 +50,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void getNewsArticles() {
         swipeRefresh.setRefreshing(true);
-        list = new ArrayList<>();
         viewModel.getAllArticles().observe(this, new Observer<List<NewsMod.ArticleMod>>() {
             @Override
             public void onChanged(List<NewsMod.ArticleMod> articleMods) {
                 swipeRefresh.setRefreshing(false);
-                list = articleMods;
                 initRecyclerView(articleMods);
             }
         });
