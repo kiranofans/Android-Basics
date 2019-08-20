@@ -8,7 +8,10 @@ public class RxBus {
     private static RxBus rxBus;
 
     public static RxBus getInstance() {
-        return rxBus = new RxBus();
+        if(rxBus == null){
+            rxBus = new RxBus();
+        }
+        return rxBus;
     }
 
     private RxBus() {
