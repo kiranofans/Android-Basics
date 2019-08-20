@@ -5,9 +5,10 @@
 
 -Live data implementation with Retrofit 2 (Completed)
 
-# Four main ways of fragment communication
+-Bluetooth connection sample
+
+## Four main ways of fragment communication
 -Fragment communication using EventBus 
 
 -Fragment communication using RxJava (Completed)
 
--Bluetooth connection sample
