@@ -1,6 +1,5 @@
 package project.android_projects.com.fragmentcommunicationusingeventbus;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -21,16 +19,7 @@ public class FragmentReceiveText extends Fragment {
     private View v;
     private TextView resultTV;
 
-    private Context context;
-    private static FragmentReceiveText instance;
-
     public FragmentReceiveText() {
-        // Required empty public constructor
-        //this.context = context;
-    }
-
-    public static FragmentReceiveText getInstance(){
-        return new FragmentReceiveText();
     }
 
     @Override
@@ -45,8 +34,6 @@ public class FragmentReceiveText extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         resultTV = view.findViewById(R.id.result_text_view);
-       // EventBus.getDefault().register(this);
-
     }
 
     //Declare and annotate subscribing method

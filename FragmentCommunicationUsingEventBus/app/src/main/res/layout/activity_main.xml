@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -10,16 +10,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <include layout="@layout/fragment_send_layout"
+        <FrameLayout
             android:id="@+id/send_fragment"
             android:layout_height="200dp"
-            android:layout_margin="4dp"
             android:layout_width="match_parent"/>
 
-        <include layout="@layout/fragment_receive_layout"
+        <FrameLayout
             android:id="@+id/receive_fragment"
             android:layout_height="200dp"
-            android:layout_margin="4dp"
             android:layout_width="match_parent"/>
     </LinearLayout>
 
