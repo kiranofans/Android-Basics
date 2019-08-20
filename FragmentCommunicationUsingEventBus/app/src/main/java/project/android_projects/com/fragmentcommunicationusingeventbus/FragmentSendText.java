@@ -1,11 +1,13 @@
 package project.android_projects.com.fragmentcommunicationusingeventbus;
 
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,16 +23,16 @@ import org.greenrobot.eventbus.EventBus;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentSendText extends Fragment {
+    //Publisher
 
+    private EditText editText;
 
-    public FragmentSendText() {
+    private Context context;
+
+    public FragmentSendText(Context context) {
         // Required empty public constructor
+        this.context = context;
     }
-
-    public static synchronized FragmentSendText getInstance(){
-        return new FragmentSendText();
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,7 +45,7 @@ public class FragmentSendText extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        EditText editText = view.findViewById(R.id.txt_input_box);
+        editText = view.findViewById(R.id.txt_input_box);
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -54,7 +56,7 @@ public class FragmentSendText extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //Post the event here
-                EventBus.getDefault().post(charSequence.toString());
+                EventBus.getDefault().postSticky(charSequence.toString());
 
                 //The text will be sending to the second fragment as typing
             }
