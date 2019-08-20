@@ -2,24 +2,38 @@ package project.android_projects.com.fragmentscommunicationviewmodel;
 
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+
+import ViewModel.PageViewModel;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FragmentTwo extends Fragment {
-
+    private TextView displayTV;
+    private PageViewModel pageViewModel;
 
     public FragmentTwo() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //Initialize ViewModel here as well
+        pageViewModel = ViewModelProviders.of(requireActivity()).get(PageViewModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,4 +42,21 @@ public class FragmentTwo extends Fragment {
         return inflater.inflate(R.layout.fragment_two, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        displayTV = view.findViewById(R.id.result_text_view);
+        displayText();
+    }
+
+    private void displayText() {
+        pageViewModel.getLiveDataStr().observe(requireActivity(), new Observer<String>() {
+            //The Observer<String> used here is from androidx.lifecycle
+            @Override
+            public void onChanged(String s) {
+                displayTV.setText(s);
+            }
+        });
+    }
 }

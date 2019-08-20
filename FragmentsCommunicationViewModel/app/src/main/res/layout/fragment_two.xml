@@ -16,6 +16,6 @@
         android:layout_centerVertical="true"
         android:textAlignment="center"
         android:textColor="@android:color/white"
-        android:text="Texts displays here..."/>
+        android:text="Texts display here..."/>
 
 </RelativeLayout>
