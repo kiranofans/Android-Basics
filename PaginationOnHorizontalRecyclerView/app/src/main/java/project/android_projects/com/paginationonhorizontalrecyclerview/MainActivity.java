@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private MyPaginationAdatper adapter;
     private LinearLayoutManager linearLayoutMgr;
 
+    private RetrofitApi retrofitApi;
     private int currentPage = PAGE_START;
     private boolean isLastPage = false;
     private int totalPage = 3;
@@ -36,29 +37,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         initRecyclerView();
     }
 
     private void loadItem(){
-        final RetrofitApi apiService = RetrofitClient.getApiService();
-        Call<NewsMod> call = apiService.getTopHeadLines(API_KEY, "ca",
+        retrofitApi = RetrofitClient.getApiService();
+        Call<NewsMod> call = retrofitApi.getTopHeadLines(API_KEY, "ca",
                 "business", currentPage);
 
         call.enqueue(new Callback<NewsMod>() {
             @Override
             public void onResponse(Call<NewsMod> call, Response<NewsMod> response) {
-                if(response.body() != null && currentPage != PAGE_START){
-                    adapter.removeLoading();
-                    adapter.addAll(response.body().getArticleList());
-                    if(currentPage < totalPage){
+                if (response.body() != null){
+                    if (currentPage != PAGE_START) {
+                        adapter.removeLoading();
+                        adapter.addAll(response.body().getArticleList());
+                    }
+
+                    if (currentPage < totalPage) {
                         adapter.addLoading();
-                    }else {
+                    } else {
                         isLastPage = true;
                         isLoading = false;
                     }
                 }
-
             }
 
             @Override
@@ -73,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         adapter = new MyPaginationAdatper(this, new ArrayList<NewsMod.ArticleMod>());
         linearLayoutMgr = new LinearLayoutManager(this);
         linearLayoutMgr.setOrientation(RecyclerView.HORIZONTAL);
+
+        recyclerView.setHasFixedSize(true);
 
         recyclerView.setLayoutManager(linearLayoutMgr);
         recyclerView.setAdapter(adapter);
