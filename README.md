@@ -6,6 +6,8 @@
 
 -Live data implementation with Retrofit 2 (Completed)
 
+-Pagination on horizontal RecyclerView with Retrofit 2
+
 -Bluetooth connection sample
 
 ## Four main ways of fragment communication
