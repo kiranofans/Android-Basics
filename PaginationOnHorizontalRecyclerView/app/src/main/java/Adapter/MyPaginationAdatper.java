@@ -17,8 +17,7 @@ import java.util.List;
 import Models.NewsMod;
 import project.android_projects.com.paginationonhorizontalrecyclerview.R;
 
-import static Utils.ViewTypeConstants.ViewTypes.HORIZONTAL_TYPE;
-import static Utils.ViewTypeConstants.ViewTypes.VERTICAL_TYPE;
+import static Utils.AppConstants.HORIZONTAL_VIEW_TYPE;
 
 public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
     private Context context;
@@ -27,6 +26,8 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
     private Callback callback;
 
     private boolean isLoaderVisible = false;
+
+    private static final int VERTICAL_VIEW_TYPE = 20;
 
     public MyPaginationAdatper(Context context, List<NewsMod.ArticleMod> list){
         articleList = list;
@@ -41,12 +42,12 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
     @Override
     public BaseViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch(viewType){
-            case HORIZONTAL_TYPE://Normal type
+            case HORIZONTAL_VIEW_TYPE://Normal type
                 return new HorizontalViewHolder(LayoutInflater.from
                         (parent.getContext()).inflate(R.layout.item_layout,
                         parent,false));
 
-            case VERTICAL_TYPE://loading type
+            case VERTICAL_VIEW_TYPE://loading type
                 return  new EmptyViewHolder(LayoutInflater.from
                         (parent.getContext()).inflate(R.layout.item_loading,
                         parent,false));
@@ -63,9 +64,9 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
     @Override
     public int getItemViewType(int position) {
         if(isLoaderVisible){//false
-            return position == articleList.size() - 1 ? VERTICAL_TYPE : HORIZONTAL_TYPE;
+            return position == articleList.size() - 1 ? VERTICAL_VIEW_TYPE : HORIZONTAL_VIEW_TYPE;
         }else{
-            return HORIZONTAL_TYPE;
+            return HORIZONTAL_VIEW_TYPE;
         }
     }
 
@@ -129,7 +130,7 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
         @Override
         public void bind(NewsMod.ArticleMod obj) {
             titleTv.setText(obj.getTitle());
-            contentTV.setText(obj.getContent());
+            contentTV.setText(obj.getDescription());
             Glide.with(context).load(obj.getUrlToImage()).into(newsImgView);
         }
     }
@@ -148,6 +149,6 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
 
 
     public interface Callback{
-        void onRepoEmptyViewRetClick();
+        void onRepoEmptyViewRetryClick();
     }
 }

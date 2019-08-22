@@ -7,10 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Adapter.MyPaginationAdatper;
 import Adapter.PaginationScrollListener;
 import Models.NewsMod;
+import Utils.AppConstants;
 import Utils.RetrofitApi;
 import Utils.RetrofitClient;
 import retrofit2.Call;
@@ -33,27 +35,34 @@ public class MainActivity extends AppCompatActivity {
     private boolean isLoading = false;
     int itemCount  = 0;
 
+    private List<NewsMod.ArticleMod> articleModlist;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
+        articleModlist = new ArrayList<>();
+
         initRecyclerView();
+        //loadItem();
     }
 
     private void loadItem(){
         retrofitApi = RetrofitClient.getApiService();
-        Call<NewsMod> call = retrofitApi.getTopHeadLines(API_KEY, "ca",
-                "business", currentPage);
+        Call<NewsMod> call = retrofitApi.getTopHeadLines("ca",
+                "business", API_KEY,currentPage, AppConstants.PAGE_SIZE);
 
         call.enqueue(new Callback<NewsMod>() {
             @Override
             public void onResponse(Call<NewsMod> call, Response<NewsMod> response) {
-                if (response.body() != null){
+                NewsMod newsMod = response.body();
+                if (newsMod != null){
                     if (currentPage != PAGE_START) {
-                        adapter.removeLoading();
-                        adapter.addAll(response.body().getArticleList());
+                        articleModlist = newsMod.getArticleList();
+                       // adapter.removeLoading();
+                        adapter.addAll(articleModlist);
                     }
 
                     if (currentPage < totalPage) {
@@ -74,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void initRecyclerView(){
         recyclerView = findViewById(R.id.recycler_view);
-        adapter = new MyPaginationAdatper(this, new ArrayList<NewsMod.ArticleMod>());
+        adapter = new MyPaginationAdatper(this,articleModlist);
         linearLayoutMgr = new LinearLayoutManager(this);
         linearLayoutMgr.setOrientation(RecyclerView.HORIZONTAL);
 
@@ -87,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void loadMoreItems() {
                 isLoading = true;
-                currentPage ++;
+                currentPage++;
                 loadItem();
             }
 
@@ -101,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 return isLoading;
             }
         });
+
     }
 
 }
