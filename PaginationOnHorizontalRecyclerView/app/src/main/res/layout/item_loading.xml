@@ -2,6 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:background="@android:color/transparent"
+    android:gravity="center_vertical"
+    android:layout_marginHorizontal="16dp"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/loading_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="textStart"
+        android:padding="8dp"
+        android:textSize="18sp"
+        android:text="Loading News..."
+        android:textColor="@android:color/white"/>
+
+    <!--<TextView
+        android:id="@+id/no_more_news_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:padding="8dp"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:text="This Is The End of The News"
+        android:visibility="gone"/>-->
 </LinearLayout>

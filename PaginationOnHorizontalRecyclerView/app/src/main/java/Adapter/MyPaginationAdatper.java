@@ -3,6 +3,7 @@ package Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,7 @@ import project.android_projects.com.paginationonhorizontalrecyclerview.R;
 
 import static Utils.AppConstants.HORIZONTAL_VIEW_TYPE;
 
-public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
+public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel> {
     private Context context;
 
     private List<NewsMod.ArticleMod> articleList;
@@ -31,28 +32,30 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
 
     private static final int VERTICAL_VIEW_TYPE = 20;
 
-    public MyPaginationAdatper(Context context, List<NewsMod.ArticleMod> list){
+    private int lastIndex;
+
+    public MyPaginationAdatper(Context context, List<NewsMod.ArticleMod> list) {
         articleList = list;
         this.context = context;
     }
 
-    public void setCallback(Callback callback){
+    public void setCallback(Callback callback) {
         this.callback = callback;
     }
 
     @NonNull
     @Override
     public BaseViewModel onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        switch(viewType){
+        switch (viewType) {
             case HORIZONTAL_VIEW_TYPE://Normal type
                 return new HorizontalViewHolder(LayoutInflater.from
                         (parent.getContext()).inflate(R.layout.item_layout,
-                        parent,false));
+                        parent, false));
 
             case VERTICAL_VIEW_TYPE://loading type
-                return  new EmptyViewHolder(LayoutInflater.from
+                return new EmptyViewHolder(LayoutInflater.from
                         (parent.getContext()).inflate(R.layout.item_loading,
-                        parent,false));
+                        parent, false));
             default:
                 return null;
         }
@@ -65,38 +68,40 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
 
     @Override
     public int getItemViewType(int position) {
-        if(isLoaderVisible){//false
-            return position == articleList.size() - 1? VERTICAL_VIEW_TYPE : HORIZONTAL_VIEW_TYPE;
-        }else{
+        lastIndex = articleList.size() - 1;
+        if (isLoaderVisible && position == lastIndex) {//false
+
+            return VERTICAL_VIEW_TYPE;
+        } else {
             return HORIZONTAL_VIEW_TYPE;
         }
     }
 
     @Override
     public int getItemCount() {
-        return articleList == null? 0 : articleList.size();
+        return articleList == null ? 0 : articleList.size();
     }
 
-    public void add(NewsMod.ArticleMod response){
+    public void add(NewsMod.ArticleMod response) {
         articleList.add(response);
-        notifyItemInserted(articleList.size()-1);
+        notifyItemInserted(articleList.size() - 1);
     }
 
-    public void addAll(List<NewsMod.ArticleMod> items){
-        for(NewsMod.ArticleMod response : items){
+    public void addAll(List<NewsMod.ArticleMod> items) {
+        for (NewsMod.ArticleMod response : items) {
             add(response);
         }
     }
 
-    public void remove(NewsMod.ArticleMod items){
+    public void remove(NewsMod.ArticleMod items) {
         int pos = articleList.indexOf(items);
-        if(pos > -1){
+        if (pos > -1) {
             articleList.remove(pos);
             notifyItemInserted(pos);
         }
     }
 
-    public void addLoading(){
+    public void addLoading() {
         isLoaderVisible = true;
         add(new NewsMod.ArticleMod());
     }
@@ -117,18 +122,20 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
         }
     }
 
-    NewsMod.ArticleMod getItem(int posIndex){
+    NewsMod.ArticleMod getItem(int posIndex) {
         return articleList.get(posIndex);
     }
 
-    public class HorizontalViewHolder extends BaseViewModel<NewsMod.ArticleMod>{
-        TextView titleTv, contentTV, publishedAtTV, readMoreTVBtn;
+    public class HorizontalViewHolder extends BaseViewModel<NewsMod.ArticleMod> {
+        TextView titleTv, contentTV, publishedAtTV, readMoreTVBtn, loadingTV;
         ImageView newsImgView;
 
         Intent intent;
 
         public HorizontalViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            loadingTV = itemView.findViewById(R.id.loading_tv);
 
             titleTv = itemView.findViewById(R.id.title_tv);
             contentTV = itemView.findViewById(R.id.content_tv);
@@ -140,6 +147,7 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
         @Override
         public void bind(NewsMod.ArticleMod obj) {
             final String articleUrlStr = obj.getUrl();
+            lastIndex = articleList.size() - 1;
 
             titleTv.setText(obj.getTitle());
             contentTV.setText(obj.getDescription());
@@ -151,11 +159,17 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
                     context.startActivity(intent);
                 }
             });
+
+            if (getAdapterPosition() == lastIndex) {
+                Log.d("POS", getAdapterPosition()+"");
+                loadingTV.setText("This is the end");
+            }
+
             Glide.with(context).load(obj.getUrlToImage()).into(newsImgView);
         }
     }
 
-    public class EmptyViewHolder extends BaseViewModel<NewsMod.ArticleMod>{
+    public class EmptyViewHolder extends BaseViewModel<NewsMod.ArticleMod> {
 
         public EmptyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -168,7 +182,7 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
     }
 
 
-    public interface Callback{
+    public interface Callback {
         void onRepoEmptyViewRetryClick();
     }
 }
