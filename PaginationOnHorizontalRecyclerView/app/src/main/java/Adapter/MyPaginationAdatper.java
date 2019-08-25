@@ -1,6 +1,8 @@
 package Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +66,7 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
     @Override
     public int getItemViewType(int position) {
         if(isLoaderVisible){//false
-            return position == articleList.size() - 1 ? VERTICAL_VIEW_TYPE : HORIZONTAL_VIEW_TYPE;
+            return position == articleList.size() ? VERTICAL_VIEW_TYPE : HORIZONTAL_VIEW_TYPE;
         }else{
             return HORIZONTAL_VIEW_TYPE;
         }
@@ -77,7 +79,7 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
 
     public void add(NewsMod.ArticleMod response){
         articleList.add(response);
-        notifyItemInserted(articleList.size() - 1);
+        notifyItemInserted(articleList.size());
     }
 
     public void addAll(List<NewsMod.ArticleMod> items){
@@ -88,7 +90,7 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
 
     public void remove(NewsMod.ArticleMod items){
         int pos = articleList.indexOf(items);
-        if(pos > -1){
+        if(pos > 0){
             articleList.remove(pos);
             notifyItemInserted(pos);
         }
@@ -101,7 +103,7 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
 
     public void removeLoading() {
         isLoaderVisible = false;
-        int position = articleList.size() - 1;
+        int position = articleList.size();
         /*NewsMod.ArticleMod item =
         if (item != null) {*/
             articleList.remove(position);
@@ -116,8 +118,10 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
     }*/
 
     public class HorizontalViewHolder extends BaseViewModel<NewsMod.ArticleMod>{
-        TextView titleTv, contentTV;
+        TextView titleTv, contentTV, publishedAtTV, readMoreTVBtn;
         ImageView newsImgView;
+
+        Intent intent;
 
         public HorizontalViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -125,12 +129,24 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
             titleTv = itemView.findViewById(R.id.title_tv);
             contentTV = itemView.findViewById(R.id.content_tv);
             newsImgView = itemView.findViewById(R.id.news_image_view);
+            publishedAtTV = itemView.findViewById(R.id.published_at_tv);
+            readMoreTVBtn = itemView.findViewById(R.id.read_more_tv_btn);
         }
 
         @Override
         public void bind(NewsMod.ArticleMod obj) {
+            final String articleUrlStr = obj.getUrl();
+
             titleTv.setText(obj.getTitle());
             contentTV.setText(obj.getDescription());
+            publishedAtTV.setText(obj.getPublishedAt());
+            readMoreTVBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse(articleUrlStr));
+                    context.startActivity(intent);
+                }
+            });
             Glide.with(context).load(obj.getUrlToImage()).into(newsImgView);
         }
     }

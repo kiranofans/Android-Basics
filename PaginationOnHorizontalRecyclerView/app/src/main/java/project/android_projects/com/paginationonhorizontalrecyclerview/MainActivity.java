@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         articleModlist = new ArrayList<>();
 
         initRecyclerView();
-        //loadItem();
     }
 
     private void loadItem(){
@@ -87,10 +86,12 @@ public class MainActivity extends AppCompatActivity {
         linearLayoutMgr = new LinearLayoutManager(this);
         linearLayoutMgr.setOrientation(RecyclerView.HORIZONTAL);
 
-        recyclerView.setHasFixedSize(true);
+        //recyclerView.setHasFixedSize(true);
 
         recyclerView.setLayoutManager(linearLayoutMgr);
         recyclerView.setAdapter(adapter);
+
+        loadItem();
 
         recyclerView.addOnScrollListener(new PaginationScrollListener(linearLayoutMgr) {
             @Override

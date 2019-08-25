@@ -11,5 +11,5 @@ public interface RetrofitApi {
     Call<NewsMod> getTopHeadLines(@Query("country") String country,
                                   @Query("category") String category,
                                   @Query("apiKey") String api_key,
-                                  @Query("page") int page, @Query("pageSize") int pageSize);
+                                  @Query("page") Integer page, @Query("pageSize") int pageSize);
 }

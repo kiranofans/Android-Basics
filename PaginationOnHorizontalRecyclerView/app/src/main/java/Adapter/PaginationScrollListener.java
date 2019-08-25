@@ -8,7 +8,7 @@ public abstract class PaginationScrollListener extends RecyclerView.OnScrollList
 
     LinearLayoutManager linearLayoutMgr;
 
-    private static final int PAGE_SIZE = 10;
+    private static final int PAGE_SIZE = 1;
 
     public PaginationScrollListener(LinearLayoutManager layoutManager) {
         this.linearLayoutMgr = layoutManager;

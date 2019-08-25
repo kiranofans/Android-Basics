@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_vertical"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="4dp"
+    android:background="@drawable/background_item_view"
+    android:layout_marginTop="16dp"
+    android:layout_marginBottom="16dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/title_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="6dp"
-        android:padding="4dp"
+        android:layout_margin="4dp"
+        android:padding="2dp"
         android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="@android:color/black"
@@ -33,6 +39,37 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:padding="4dp" />
+            android:padding="2dp"
+            android:textSize="16sp"
+            android:textColor="@android:color/background_dark"
+            android:textAlignment="gravity"
+            android:text="@string/app_name"/>
     </ScrollView>
+
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/published_at_tv"
+            android:padding="2dp"
+            android:textSize="14sp"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2019-02-31"/>
+
+        <TextView
+            android:id="@+id/read_more_tv_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:padding="8dp"
+            android:textSize="14dp"
+            android:textStyle="bold"
+            android:background="@drawable/background_link_button"
+            android:text="Read More"/>
+    </RelativeLayout>
+
 </LinearLayout>
