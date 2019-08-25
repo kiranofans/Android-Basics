@@ -66,7 +66,7 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
     @Override
     public int getItemViewType(int position) {
         if(isLoaderVisible){//false
-            return position == articleList.size() ? VERTICAL_VIEW_TYPE : HORIZONTAL_VIEW_TYPE;
+            return position == articleList.size() - 1? VERTICAL_VIEW_TYPE : HORIZONTAL_VIEW_TYPE;
         }else{
             return HORIZONTAL_VIEW_TYPE;
         }
