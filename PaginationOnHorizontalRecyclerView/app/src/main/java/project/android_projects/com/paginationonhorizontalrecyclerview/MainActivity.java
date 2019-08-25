@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 if (newsMod != null){
                     if (currentPage != PAGE_START) {
                         articleModlist = newsMod.getArticleList();
-                       // adapter.removeLoading();
+                        adapter.removeLoading();
                         adapter.addAll(articleModlist);
                     }
 
@@ -113,5 +113,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
 
 }

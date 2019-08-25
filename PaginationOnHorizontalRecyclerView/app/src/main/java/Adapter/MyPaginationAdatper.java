@@ -79,7 +79,7 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
 
     public void add(NewsMod.ArticleMod response){
         articleList.add(response);
-        notifyItemInserted(articleList.size());
+        notifyItemInserted(articleList.size()-1);
     }
 
     public void addAll(List<NewsMod.ArticleMod> items){
@@ -90,7 +90,7 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
 
     public void remove(NewsMod.ArticleMod items){
         int pos = articleList.indexOf(items);
-        if(pos > 0){
+        if(pos > -1){
             articleList.remove(pos);
             notifyItemInserted(pos);
         }
@@ -103,19 +103,23 @@ public class MyPaginationAdatper extends RecyclerView.Adapter<BaseViewModel>{
 
     public void removeLoading() {
         isLoaderVisible = false;
-        int position = articleList.size();
-        /*NewsMod.ArticleMod item =
-        if (item != null) {*/
+        int position = articleList.size() - 1;
+        NewsMod.ArticleMod item = getItem(position);
+        if (item != null) {
             articleList.remove(position);
             notifyItemRemoved(position);
-        //}
+        }
     }
 
-    /*public void clear() {
+    public void clear() {
         while (getItemCount() > 0) {
             remove(getItem(0));
         }
-    }*/
+    }
+
+    NewsMod.ArticleMod getItem(int posIndex){
+        return articleList.get(posIndex);
+    }
 
     public class HorizontalViewHolder extends BaseViewModel<NewsMod.ArticleMod>{
         TextView titleTv, contentTV, publishedAtTV, readMoreTVBtn;
