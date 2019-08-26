@@ -6,7 +6,7 @@
 
 -Live data implementation with Retrofit 2 (Completed)
 
--Pagination on horizontal RecyclerView with Retrofit 2
+-Pagination on horizontal RecyclerView with Retrofit 2 (Basically completed)
 
 -Bluetooth connection sample
 
