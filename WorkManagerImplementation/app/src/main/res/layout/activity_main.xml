@@ -11,17 +11,16 @@
         android:id="@+id/tv_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_marginHorizontal="16dp"
         android:padding="8dp"
-        android:textSize="18sp"
-        android:layout_margin="8dp"/>
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/button_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
         android:background="@android:drawable/btn_default"
-        android:text="Send Notification"
-        android:layout_margin="8dp"/>
+        android:text="Send Notification" />
 
 </LinearLayout>

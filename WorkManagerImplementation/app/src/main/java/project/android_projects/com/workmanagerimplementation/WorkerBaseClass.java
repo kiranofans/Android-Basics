@@ -18,9 +18,13 @@ import static Utils.AppConstants.WORK_RESULT;
 public class WorkerBaseClass extends Worker {
     //Second Step: Create base class of Worker
 
-    /** Worker class specifies what task to perform.
+    private String taskDataStr,notifMsg;
+
+    /**
+     * Worker class specifies what task to perform.
      * WorkManager API includes an abstract Worker class and
-     * it needs to extend this Worker class and perform the work */
+     * it needs to extend this Worker class and perform the work
+     */
 
     public WorkerBaseClass(@NonNull Context context, @NonNull WorkerParameters workerParams) {
         super(context, workerParams);
@@ -30,16 +34,17 @@ public class WorkerBaseClass extends Worker {
     @Override
     public Result doWork() {
         Data taskData = getInputData();
-        String taskDataStr = taskData.getString(AppConstants.MESSAGE_STATUS);
+        taskDataStr = taskData.getString(AppConstants.MESSAGE_STATUS);
 
-        String desc = taskDataStr!=null ? taskDataStr : "Message has been sent";
-        showNotification("WorkManager", desc);
-        Data outputData = new Data.Builder().putString(WORK_RESULT,"Jobs Finished").build();
+        notifMsg = taskDataStr != null ? taskDataStr : "Message has been sent\n" +
+                "Longgggggggggggggggggggggggg";
+        showNotification("WorkManager", notifMsg);
+        Data outputData = new Data.Builder().putString(WORK_RESULT, "Jobs Finished").build();
 
         return Result.success(outputData);
     }
 
-    private void showNotification(String workTask, String desc){
+    private void showNotification(String workTask, String notifMsg) {
         NotificationManager notifMgr = (NotificationManager) getApplicationContext()
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -47,15 +52,25 @@ public class WorkerBaseClass extends Worker {
         String channelName = "task_name";
 
         //If android version is greater than O
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel notifChannel = new NotificationChannel(channelID,
-                    channelName,NotificationManager.IMPORTANCE_DEFAULT);
+                    channelName, NotificationManager.IMPORTANCE_DEFAULT);
             notifMgr.createNotificationChannel(notifChannel);
         }
 
-        NotificationCompat.Builder notifBuilder = new NotificationCompat
-                .Builder(getApplicationContext(),channelID).setContentTitle(workTask)
-                .setContentText(desc).setSmallIcon(R.mipmap.ic_launcher);
-        notifMgr.notify(1, notifBuilder.build());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            /** Use BigTextStyle().bigText(String str) to make
+             * push notification expandable if text is too long*/
+            NotificationCompat.Builder notifBuilder = new NotificationCompat
+                    .Builder(getApplicationContext(), channelID).setContentTitle(workTask)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(notifMsg))
+                    .setContentText(notifMsg).setSmallIcon(R.drawable.ic_notification_18dp);
+
+            notifMgr.notify(1, notifBuilder.build());
+
+        }
+
+
     }
 }
