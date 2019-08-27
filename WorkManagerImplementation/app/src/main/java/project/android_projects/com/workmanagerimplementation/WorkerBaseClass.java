@@ -18,7 +18,7 @@ import static Utils.AppConstants.WORK_RESULT;
 public class WorkerBaseClass extends Worker {
     //Second Step: Create base class of Worker
 
-    private String taskDataStr,notifMsg;
+    private String taskDataStr, notifMsg;
 
     /**
      * Worker class specifies what task to perform.
@@ -70,7 +70,5 @@ public class WorkerBaseClass extends Worker {
             notifMgr.notify(1, notifBuilder.build());
 
         }
-
-
     }
 }
