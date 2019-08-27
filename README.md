@@ -19,3 +19,7 @@
 
 -Fragment communication using Interface (Completed)
 
+## Cores
+-WorkManager basics and Push Notification(Completed)
+
+
