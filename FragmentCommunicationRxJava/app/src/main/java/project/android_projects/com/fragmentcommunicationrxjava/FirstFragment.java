@@ -54,6 +54,7 @@ public class FirstFragment extends Fragment {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 //Publish the event on RxBus instance; publish the event to all subscribers
                 RxBus.getInstance().publish(charSequence.toString());
+                //This only sends one stream of data
             }
 
             @Override

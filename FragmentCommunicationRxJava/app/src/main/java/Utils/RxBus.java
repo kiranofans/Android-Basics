@@ -8,11 +8,8 @@ public class RxBus {
     private static RxBus rxBus;
 
     public static RxBus getInstance() {
-        //Need to code the instance like this
-        if (rxBus == null) {
-            rxBus = new RxBus();
-        }
-        return rxBus;
+        //Need to code the instance in lazy init form
+        return rxBus == null ? rxBus = new RxBus() : rxBus;
     }
 
     private RxBus() {
