@@ -1,18 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linear_layout_OTP"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:visibility="visible">
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_margin="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher_background"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/text_view_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            android:textAlignment="center"
+            android:text="Enter the OTP received on"/>
+
+        <EditText
+            android:id="@+id/txt_input_mobile_num"
+            android:gravity="center"
+            android:hint="Code here..."
+            android:background="@android:drawable/editbox_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_get_otp"
+            android:background="@color/colorAccent"
+            android:layout_marginVertical="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:text="Get OTP Code"
+            android:textColor="@android:color/white"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/layout_verify_OTP"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="24dp"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+        <ImageView
+            android:id="@+id/image_view_get_otp"
+            android:layout_margin="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_launcher_background"/>
+
+        <TextView
+            android:id="@+id/txt_view_otp_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="16dp"
+            android:textAlignment="center"
+            android:text="Enter the OTP received on"/>
+
+        <EditText
+            android:id="@+id/txt_input_otp"
+            android:gravity="center"
+            android:hint="Code here..."
+            android:background="@android:drawable/editbox_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btn_verify"
+            android:background="@color/colorAccent"
+            android:layout_marginVertical="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Verify"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+</LinearLayout>
