@@ -19,6 +19,8 @@ import ViewModel.PageViewModel;
 /**
  * A simple {@link Fragment} subclass.
  */
+//ViewModel does keep track of the associations between ViewModels and UI Controllers
+// (Activities or fragments)
 public class FragmentTwo extends Fragment {
     private TextView displayTV;
     private PageViewModel pageViewModel;
@@ -33,6 +35,8 @@ public class FragmentTwo extends Fragment {
 
         //Initialize ViewModel here as well
         pageViewModel = ViewModelProviders.of(requireActivity()).get(PageViewModel.class);
+        //this init will return the pre-existing ViewModel associated with the specific Fragment
+        //This is what preserves the data
     }
 
     @Override
