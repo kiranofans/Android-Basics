@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/linear_layout_OTP"
+        android:id="@+id/linear_layout_get_OTP"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_marginHorizontal="8dp"
@@ -17,14 +17,14 @@
         android:layout_height="wrap_content"
         android:visibility="visible">
         <ImageView
-            android:id="@+id/image_view"
+            android:id="@+id/image_view_num"
             android:layout_margin="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_launcher_background"/>
 
         <TextView
-            android:id="@+id/text_view_hint"
+            android:id="@+id/txt_view_mobile_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -33,7 +33,7 @@
             android:text="Enter the OTP received on"/>
 
         <EditText
-            android:id="@+id/txt_input_mobile_num"
+            android:id="@+id/edit_txt_mobile_num"
             android:gravity="center"
             android:hint="Code here..."
             android:background="@android:drawable/editbox_background"
@@ -51,7 +51,7 @@
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/layout_verify_OTP"
+        android:id="@+id/linear_layout_verify_OTP"
         android:orientation="vertical"
         android:layout_marginHorizontal="8dp"
         android:layout_marginBottom="24dp"
@@ -59,15 +59,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone">
+
         <ImageView
-            android:id="@+id/image_view_get_otp"
+            android:id="@+id/image_view_otp"
             android:layout_margin="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_launcher_background"/>
 
         <TextView
-            android:id="@+id/txt_view_otp_hint"
+            android:id="@+id/txt_view_otp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
@@ -76,7 +77,7 @@
             android:text="Enter the OTP received on"/>
 
         <EditText
-            android:id="@+id/txt_input_otp"
+            android:id="@+id/edit_txt_otp"
             android:gravity="center"
             android:hint="Code here..."
             android:background="@android:drawable/editbox_background"
