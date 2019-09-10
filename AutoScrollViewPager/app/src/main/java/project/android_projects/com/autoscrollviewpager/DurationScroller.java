@@ -11,16 +11,16 @@ public class DurationScroller extends Scroller {
         super(context);
     }
 
-    public DurationScroller(Context context, Interpolator animInterpolator){
-        super(context,animInterpolator);
+    public DurationScroller(Context context, Interpolator animInterpolator) {
+        super(context, animInterpolator);
     }
 
-    public void setScrollDurationFactor(double scrollFactor){
+    public void setScrollDurationFactor(double scrollFactor) {
         this.scrollFactor = scrollFactor;
     }
 
     @Override
     public void startScroll(int startX, int startY, int dx, int dy, int duration) {
-        super.startScroll(startX, startY, dx, dy,(int)(duration * scrollFactor));
+        super.startScroll(startX, startY, dx, dy, (int) (duration * scrollFactor));
     }
 }

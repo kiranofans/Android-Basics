@@ -22,7 +22,7 @@ public class SlideFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private static final String[] PAGE_TITLES = new String[]{"Page 1", "Page 2", "Page 3"};
+    private static final String[] PAGE_TITLES = new String[]{"Code Well", "Eat Well", "Sleep Well"};
     private static final int[] PAGE_IMAGES = new int[]
             {R.drawable.ic_code, R.drawable.ic_eat, R.drawable.ic_sleep};
 
@@ -45,12 +45,12 @@ public class SlideFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_slide,container,false);
+        View rootView = inflater.inflate(R.layout.fragment_slide, container, false);
         final TextView sectionLableTV = rootView.findViewById(R.id.section_label);
         final ImageView imgView = rootView.findViewById(R.id.imageView);
 
         //Observing live data change that observing the position of the current fragment
-        sliderViewModel.getText().observe(this, new Observer<Integer>(){
+        sliderViewModel.getText().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer index) {
                 sectionLableTV.setText(PAGE_TITLES[index]);
@@ -68,7 +68,7 @@ public class SlideFragment extends Fragment {
         sliderViewModel = ViewModelProviders.of(this).get(SliderViewModel.class);
 
         int index = 1;
-        if(getArguments() != null){
+        if (getArguments() != null) {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
         sliderViewModel.setIndex(index);
