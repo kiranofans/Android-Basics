@@ -10,6 +10,8 @@
 
 -Bluetooth connection sample
 
+-Auto scroll View Pager (Completed)
+
 ## Four main ways of fragment communication
 -Fragment communication using EventBus (Completed)
 
