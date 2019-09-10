@@ -7,7 +7,7 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 public class SliderViewModel extends ViewModel {
-    //Google recommend using ViewModel to communicate between fragmetns
+    //Google recommend using ViewModel to communicate between fragments
 
     private MutableLiveData<Integer> mIndex = new MutableLiveData<>();
 
