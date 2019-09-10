@@ -24,12 +24,12 @@ public class AutoScrollPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return 3;
     }
 
 
     @Override
     public Fragment getItem(int position) {
-        return null;
+        return SlideFragment.getInstance(position + 1);
     }
 }
