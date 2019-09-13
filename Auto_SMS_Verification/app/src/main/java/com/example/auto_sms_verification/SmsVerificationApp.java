@@ -1,3 +1,5 @@
+package com.example.auto_sms_verification;
+
 import android.app.Application;
 
 import Helpers.AppSignatureHelper;

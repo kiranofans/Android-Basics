@@ -28,7 +28,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
-import Receiver.SmsBroadcastReceiver;
+import receiver.SmsBroadcastReceiver;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
         OtpReceivedInterface, GoogleApiClient.OnConnectionFailedListener {
@@ -74,6 +74,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         btnVerifyOTP = findViewById(R.id.btn_verify);
         btnGetOTP = findViewById(R.id.btn_get_otp);
 
+        btnGetOTP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startSmsListener();
+            }
+        });
         layoutVerifyOTP = findViewById(R.id.linear_layout_get_OTP);
         layoutGetOTP = findViewById(R.id.linear_layout_verify_OTP);
     }
