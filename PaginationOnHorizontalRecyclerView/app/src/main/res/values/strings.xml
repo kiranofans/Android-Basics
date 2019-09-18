@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">PaginationOnHorizontalRecyclerView</string>
+
+    <string name="too_many_request_within_24_hours">"You have made too many requests recently. Developer accounts are limited to 500 requests over a 24 hour period (250 requests available every 12 hours). Please upgrade to a paid plan if you need more requests"</string>
+    <string name="require_upgrade">Require Upgrade</string>
 </resources>

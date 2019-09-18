@@ -13,3 +13,4 @@ public interface RetrofitApi {
                                   @Query("apiKey") String api_key,
                                   @Query("page") Integer page, @Query("pageSize") int pageSize);
 }
+
