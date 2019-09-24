@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class ApiResponseMod {
     @SerializedName("RC")
     @Expose
-    private int mRC = 0;
+    int mRC = 0;
     @SerializedName("paging")
     @Expose
     Paging mPaging = null;
