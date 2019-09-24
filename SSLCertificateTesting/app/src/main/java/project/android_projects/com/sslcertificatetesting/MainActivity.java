@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                appConfigMgr.getRequestToken(MainActivity.this);
+                //appConfigMgr.getRequestToken(MainActivity.this);
+                appConfigMgr.getStoreList(MainActivity.this, apiService);
                 /*Toast.makeText(MainActivity.this,appConfigMgr.getRequestToken(MainActivity.this)+"",Toast.LENGTH_LONG).show();*/
             }
         });

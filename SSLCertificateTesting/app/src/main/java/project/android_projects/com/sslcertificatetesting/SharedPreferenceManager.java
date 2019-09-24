@@ -4,6 +4,9 @@ import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import static project.android_projects.com.sslcertificatetesting.AppConstants.PREF_KEY_ACCESS_SECRET;
+import static project.android_projects.com.sslcertificatetesting.AppConstants.PREF_KEY_ACCESS_TOKEN;
+
 public class SharedPreferenceManager extends Application {
     private static String PREF_TAG = SharedPreferenceManager.class.getSimpleName();
 
@@ -13,15 +16,32 @@ public class SharedPreferenceManager extends Application {
 
     private static volatile SharedPreferenceManager prefInstance;
 
+    private static OauthMod.Oauth oauth;
+
     public SharedPreferenceManager(Context context, String prefFileName){
         sharedPrefs = context.getSharedPreferences(prefFileName,Context.MODE_PRIVATE);
         this.mContext = context;
     }
 
-    public String getAccessToken(){
+    public void setAccessToken(String accessToken){
         prefEditeor = sharedPrefs.edit();
 
         //Storing access token
-        prefEditeor.putString("")
+        prefEditeor.putString(PREF_KEY_ACCESS_TOKEN,accessToken).apply();
+
+    }
+
+    public String getAccessToken(){
+
+        return sharedPrefs.getString(PREF_KEY_ACCESS_TOKEN, "");
+    }
+
+    public void setTokenSecret(){
+        prefEditeor = sharedPrefs.edit();
+        prefEditeor.putString(PREF_KEY_ACCESS_SECRET,"");
+    }
+
+    public String getTokenSecret(){
+        return sharedPrefs.getString(PREF_KEY_ACCESS_SECRET,oauth.getmSecret());
     }
 }
