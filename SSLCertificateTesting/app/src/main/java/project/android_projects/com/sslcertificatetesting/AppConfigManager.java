@@ -120,7 +120,7 @@ public class AppConfigManager {
     }
 
     public void consumerLogin(final Context context, RetrofitApi apiService) {
-        loginCall = apiService.login("7787078960", "123456", "CA");
+        loginCall = apiService.login("shu@goopter.com", "123456", "CA");
         loginCall.enqueue(new Callback<OauthMod>() {
             @Override
             public void onResponse(Call<OauthMod> call, Response<OauthMod> response) {
