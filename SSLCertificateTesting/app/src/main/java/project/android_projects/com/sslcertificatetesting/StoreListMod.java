@@ -106,7 +106,7 @@ public class StoreListMod {
             this.mMeta = mMeta;
         }
 
-        public String getmLogo() {
+        public String getLogo() {
             return mLogo;
         }
 

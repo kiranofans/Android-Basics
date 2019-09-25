@@ -24,12 +24,13 @@ public interface RetrofitApi {
     Call<AppConfigMod> getSys(@Query("sys") String system);
 
     @POST(ApiConstants.ENDPOINT_LOGIN)
-    Call<LoginMod> login(@Query("email")String email, @Query("password")String password);
+    Call<OauthMod> login(@Query("email")String email, @Query("password")String password,
+                               @Query("country_code")String countryCode);
 
     @GET(ENDPOINT_STORE_LIST)
-    Call<StoreListMod.Store> getStoreList(@Query("sort_id") int sortId, @Query("limit") int pageSize,
-                                    @Query("page") int numOfPages, @Query("lan")String language,
-                                    @Query("c_id") int countryID);
+    Call<StoreListMod.Store> getStoreList(/*@Query("sort_id") int sortId, @Query("limit") int pageSize,
+                                    @Query("page") int numOfPages, */@Query("lan")String language,
+                                    @Query("c_id") int categoryId);
 
 
 }

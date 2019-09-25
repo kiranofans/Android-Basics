@@ -4,9 +4,9 @@ public class ApiConstants {
     public static final String PUBLIC_BASE_URL = " https://api.goopter.com";
 
     public static final String ENDPOINT_PINGING = "/api/rest/v7/ping";
-    public static final String ENDPOINT_APP_CONFIG = "api/v7/appconfig";
+    public static final String ENDPOINT_APP_CONFIG = "/api/v7/appconfig";
     public static final String ENDPOINT_LOGIN = "/api/rest/v7/login";
-    public static final String ENDPOINT_STORE_LIST = "api/v7/slst";
+    public static final String ENDPOINT_STORE_LIST = "/api/v7/slst";
 
     //Response codes
     public static final int API_RC_OK = 200;

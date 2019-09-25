@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName;
 
 public class OauthMod {
     @SerializedName("records")
-    private Oauth mOauth;
+    Oauth mOauth = null;
 
-    public Oauth getmOauth() {
+   /* public Oauth getOauth() {
         return mOauth;
     }
 
     public void setmOauth(Oauth mOauth) {
         this.mOauth = mOauth;
-    }
+    }*/
 
     class Oauth {
         @SerializedName("email")
@@ -24,11 +24,11 @@ public class OauthMod {
         @SerializedName("secret")
         private String mSecret = "";
 
-        public String getmEmail() {
+        public String getEmail() {
             return mEmail;
         }
 
-        public void setmEmail(String mEmail) {
+        public void setEmail(String mEmail) {
             this.mEmail = mEmail;
         }
 
