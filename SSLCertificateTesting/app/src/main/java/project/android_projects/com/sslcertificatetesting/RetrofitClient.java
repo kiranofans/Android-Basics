@@ -9,15 +9,21 @@ public class RetrofitClient {
 
     private static final String BASE_URL = " https://api.goopter.com";
 
-    private static OkHttpClient okHttpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient();
+    private static OkHttpClient okHttpClient;
 
     public static RetrofitApi getApiService(){
-
+        okHttpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient();
         if(retrofit == null){
             retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL).client(okHttpClient)
-                    .addConverterFactory(GsonConverterFactory.create()).build();
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(okHttpClient).build();
         }
         return retrofit.create(RetrofitApi.class);
+    }
+
+
+    public static void createOauth(){
+
     }
 }

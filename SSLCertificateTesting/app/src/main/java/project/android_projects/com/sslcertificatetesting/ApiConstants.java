@@ -5,7 +5,7 @@ public class ApiConstants {
 
     public static final String ENDPOINT_PINGING = "/api/rest/v7/ping";
     public static final String ENDPOINT_APP_CONFIG = "/api/v7/appconfig";
-    public static final String ENDPOINT_LOGIN = "/api/rest/v7/login";
+    public static final String ENDPOINT_LOGIN = "/api/rest/v7/login/";
     public static final String ENDPOINT_STORE_LIST = "/api/v7/slst";
 
     //Response codes

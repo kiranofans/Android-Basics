@@ -16,7 +16,7 @@ public class AppConfigManager {
 
     private static volatile AppConfigManager appConfigMgr;
 
-    private String consumerKey, consumerSecret = "";
+    private String consumerKey, consumerSecret, accessToken,tokenSecret = "";
     private AppConfigMod.AppConfig appConfig;
     private AppConfigMod appConfigMod;
 
@@ -25,10 +25,14 @@ public class AppConfigManager {
     //Retrofit calls
     private Call<AppConfigMod> consumerKeyCall, consumerSecretCall;
     private Call<StoreListMod.Store> storeListCall;
-    private Call<OauthMod> loginCall;
+    private Call<ConsumerLogin> loginCall;
 
     private OauthMod.Oauth oauth;
     private OauthMod oauthMod;
+
+    private ConsumerLogin consumerLogin;
+    private LoginRequestBodyMod requestBodyMod;
+    private Records records;
 
     public static AppConfigManager getInstance() {
         if (appConfigMgr == null) {
@@ -44,7 +48,7 @@ public class AppConfigManager {
         //Don't need to send access token and secret for this API
 
         prefsMgr = new SharedPreferenceManager(context, PREF_FILE_GLOBAL);
-        storeListCall = apiService.getStoreList("en", 1);
+        storeListCall = apiService.getStoreList("en", 4);
 
         storeListCall.enqueue(new Callback<StoreListMod.Store>() {
             @Override
@@ -69,15 +73,24 @@ public class AppConfigManager {
     public void pingToCheckTokenValidity(Context context, RetrofitApi apiService) {
         //The access token and secret is in login api
         prefsMgr = new SharedPreferenceManager(context, PREF_FILE_GLOBAL);
+
+        consumerLogin(context,apiService);
+        getRequestToken(context,apiService);
+
         long time = System.currentTimeMillis();
+        consumerKey = prefsMgr.getConsumerKey();
+        consumerSecret = prefsMgr.getConsumerSecret();
+        accessToken = prefsMgr.getAccessToken();
+        tokenSecret = prefsMgr.getTokenSecret();
+
         Call<PingingModel> pingCall = apiService.pingServer(consumerKey,
                 String.format("%s%08x%05x", "", time / 1000, time), "HMAC-SHA1",
-                (time / 1000) + "", "1.0", oauth.getAccessToken(), consumerSecret);
+                (time / 1000) + "", "1.0", accessToken, consumerSecret);
         pingCall.enqueue(new Callback<PingingModel>() {
             @Override
             public void onResponse(Call<PingingModel> call, Response<PingingModel> response) {
                 if (response.isSuccessful()) {
-                    Log.d("PING_TAG", "Access Token: " + oauth.getAccessToken());
+                    Log.d("PING_TAG", "Response Code: " + response.body().getRC());
                 }
             }
 
@@ -89,6 +102,7 @@ public class AppConfigManager {
     }
 
     public void getRequestToken(final Context context, RetrofitApi apiService) {
+        //Oauth 1.0 tokens and secrets
         prefsMgr = new SharedPreferenceManager(context, PREF_FILE_GLOBAL);
         Call<AppConfigMod> appConfigCall = apiService.getSys("android");
 
@@ -97,17 +111,17 @@ public class AppConfigManager {
             public void onResponse(Call<AppConfigMod> call, Response<AppConfigMod> response) {
                 appConfigMod = response.body();
                 if (response.isSuccessful() && appConfigMod != null) {
-                    consumerKey = appConfigMod.appConfig.getConsumerKey();
-                    consumerSecret = appConfigMod.appConfig.getConsumerSecret();
-                    prefsMgr.setAccessToken(oauth.getAccessToken());
+                    Long time = System.currentTimeMillis()/1000;
+                    String consumerKey = appConfigMod.appConfig.getConsumerKey();
+                    String consumerSecret = appConfigMod.appConfig.getConsumerSecret();
+
+                    prefsMgr.setConsumerKey(consumerKey);
+                    prefsMgr.setConsumerSecret(consumerSecret);
 
                     Log.d("TAG", "Consumer Key: " + consumerKey +
-                            "\nSecret: " + consumerSecret);
-
-
-                    //Pack multiple values into one object and return the object variable
-                    appConfigMod.appConfig.setConsumerKey(consumerKey);
-                    appConfigMod.appConfig.setConsumerSecret(consumerSecret);
+                            "\nSecret: " + consumerSecret + "\nAccess Token: "
+                            + prefsMgr.getAccessToken() + "\nAccess Secret:" +
+                            prefsMgr.getTokenSecret()+"\nTime: "+time);
                 }
             }
 
@@ -116,38 +130,39 @@ public class AppConfigManager {
 
             }
         });
-        //return appConfigMod.appConfig;
     }
 
     public void consumerLogin(final Context context, RetrofitApi apiService) {
-        loginCall = apiService.login("shu@goopter.com", "123456", "CA");
-        loginCall.enqueue(new Callback<OauthMod>() {
+        prefsMgr = new SharedPreferenceManager(context, PREF_FILE_GLOBAL);
+
+        loginCall = apiService.login(new LoginRequestBodyMod("sakurala111@yahoo.com", "123456"));
+        loginCall.enqueue(new Callback<ConsumerLogin>() {
             @Override
-            public void onResponse(Call<OauthMod> call, Response<OauthMod> response) {
-                oauthMod = response.body();
-                if (response.isSuccessful() && oauthMod != null) {
-                    String token = oauthMod.mOauth.getAccessToken();
-                    Toast.makeText(context, "Access Token: " + token,
-                            Toast.LENGTH_LONG).show();
-                    Log.d("TAG_LOGIN", "Access Token: " +
-                            token);
+            public void onResponse(Call<ConsumerLogin> call, Response<ConsumerLogin> response) {
+                consumerLogin = response.body();
+                if (response.isSuccessful() && consumerLogin != null) {
+                    if (consumerLogin.getRC() == 200) {
+                        String accessToken = consumerLogin.getRecords().getToken();
+                        String accessSecret = consumerLogin.getRecords().getSecret();
+
+                        prefsMgr.setAccessToken(accessToken);
+                        prefsMgr.setTokenSecret(accessSecret);
+
+                        Toast.makeText(context, "Access Token: " + accessToken
+                                        + "\nAccess Secret: " + accessSecret,
+                                Toast.LENGTH_LONG).show();
+                        Log.d("TAG_LOGIN", "Access Token: " + accessToken
+                                + "\nAccess Secret: " + accessSecret);
+
+                    }
+
                 }
             }
 
             @Override
-            public void onFailure(Call<OauthMod> call, Throwable t) {
+            public void onFailure(Call<ConsumerLogin> call, Throwable t) {
 
             }
         });
     }
-    /*private <T> fromJSON(JsonElement jsonStr, Class<T> tClass){
-        if(jsonStr == null){
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            gsonBuilder.setDateFormat(AppConstants.FORMAT_DATE_TIME);
-            gsonBuilder.registerTypeAdapterFactory(TypeAdapters.newFactory
-                    (jsonStr.getAsJsonPrimitive().getAsInt(),,TypeAdapter<Number>(){
-
-            }))
-        }
-    }*/
 }

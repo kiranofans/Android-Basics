@@ -46,9 +46,11 @@ public class MainActivity extends AppCompatActivity {
         btnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //appConfigMgr.getRequestToken(MainActivity.this);
-                appConfigMgr.consumerLogin(MainActivity.this, apiService);
-                /*Toast.makeText(MainActivity.this,appConfigMgr.getRequestToken(MainActivity.this)+"",Toast.LENGTH_LONG).show();*/
+                ///appConfigMgr.getStoreList(MainActivity.this,apiService);
+                //appConfigMgr.consumerLogin(MainActivity.this, apiService);
+               // appConfigMgr.getRequestToken(MainActivity.this,apiService);
+                appConfigMgr.pingToCheckTokenValidity(MainActivity.this,apiService);
+                //Toast.makeText(MainActivity.this,appConfigMgr.getRequestToken(MainActivity.this)+"",Toast.LENGTH_LONG).show();
             }
         });
     }
