@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
     private void testAPIAccess(){
         appConfig = new AppConfigMod.AppConfig();
         String timeStamp = (System.currentTimeMillis() / 1000)+"";
-        call = apiService.pingServer(appConfig.getConsumerKey(),"","HMAC-SHA1",
-                timeStamp,"1.0","Access token",appConfig.getConsumerSecret());
+        call = apiService.pingServer(/*appConfig.getConsumerKey(),"","HMAC-SHA1",
+                timeStamp,"1.0","Access token",appConfig.getConsumerSecret()*/);
         call.enqueue(new Callback<PingingModel>() {
             @Override
             public void onResponse(Call<PingingModel> call, Response<PingingModel> response) {

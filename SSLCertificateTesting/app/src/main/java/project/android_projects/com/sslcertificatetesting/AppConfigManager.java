@@ -83,9 +83,9 @@ public class AppConfigManager {
         accessToken = prefsMgr.getAccessToken();
         tokenSecret = prefsMgr.getTokenSecret();
 
-        Call<PingingModel> pingCall = apiService.pingServer(consumerKey,
+        Call<PingingModel> pingCall = apiService.pingServer(/*consumerKey,
                 String.format("%s%08x%05x", "", time / 1000, time), "HMAC-SHA1",
-                (time / 1000) + "", "1.0", accessToken, consumerSecret);
+                (time / 1000) + "", "1.0", accessToken, consumerSecret*/);
         pingCall.enqueue(new Callback<PingingModel>() {
             @Override
             public void onResponse(Call<PingingModel> call, Response<PingingModel> response) {

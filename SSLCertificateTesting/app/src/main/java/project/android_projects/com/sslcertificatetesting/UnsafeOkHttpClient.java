@@ -1,5 +1,7 @@
 package project.android_projects.com.sslcertificatetesting;
 
+import android.app.Application;
+import android.content.Context;
 import android.text.TextUtils;
 
 import java.io.IOException;
@@ -17,7 +19,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class UnsafeOkHttpClient {
+public class UnsafeOkHttpClient extends Application {
+    static String consumerKey = "8fb7ec71f8b4e1f2ec28d2f8c3f7785a";
+    static String consumerSecret ="af035f0f340e090d5b51870f9a168acd";
+    static String token = "yxr24bbwjbaehja7bckx9eohhshit1tn";
+    static String secret = "vyswzhncilok1fup9oya5r2hz71ayt69";
+
     /** It's called UnsafeOKHttpClient because it trusts all sort of SSL certificates
      * (Expired, badSSLs, and so on )*/
     public static OkHttpClient getUnsafeOkHttpClient() {
@@ -64,8 +71,14 @@ public class UnsafeOkHttpClient {
                     String userAgent = System.getProperty("http.agent");
 
                     Request request = originRequest.newBuilder()
-                            .header("Content-Type","application/json")
-                            .header("Authorization","")
+                            .header("oauth_comsumer_key",consumerKey)
+                            .header("oauth_consumer_secret",consumerSecret)
+                            .header("oauth_nonce","")
+                            .header("oauth_signature_method","HMAC-SHA1")
+                            .header("oauth_timestamp",(System.currentTimeMillis()/1000)+"")
+                            .header("oauth_version","1.0")
+                            .header("oauth_token",token)
+                            .header("oauth_secret",secret)
                             .method(originRequest.method(),originRequest.body())
                             .build();
 

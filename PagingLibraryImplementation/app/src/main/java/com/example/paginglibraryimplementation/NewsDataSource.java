@@ -18,7 +18,7 @@ public class NewsDataSource extends PageKeyedDataSource<Integer, ArticleResponse
 
     public static final int PAGE_SIZE = 100;
     private static final int FIRST_PAGE = 1;
-    private static final String API_KEY = "c44b38deba074d9ab0fef1e359c80072";
+    private static final String API_KEY = "30934b804372406c93cb075c601eb26b";
 
     private RetrofitClient retrofitClient = RetrofitClient.getInstance();
 

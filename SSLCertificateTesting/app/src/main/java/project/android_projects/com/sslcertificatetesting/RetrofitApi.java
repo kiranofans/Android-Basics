@@ -15,13 +15,13 @@ public interface RetrofitApi {
     @Headers({"Content-Type:application/json",
     "User-Agent:http.agent"})
     @GET(ApiConstants.ENDPOINT_PINGING)
-    Call<PingingModel> pingServer(@Field("oauth_consumer_key") String consumerKey,
+    Call<PingingModel> pingServer(/*@Field("oauth_consumer_key") String consumerKey,
                                   @Field("oauth_nonce") String nonce,
                                   @Field("oauth_signature_method")String signatureMethod,
                                   @Field("oauth_timestamp")String timeStamp,
                                   @Field("oauth_version")String oAuthVersion,
                                   @Field("oauth_token") String accessToken,
-                                  @Field("oauth_secret") String consumerSecret);
+                                  @Field("oauth_secret") String consumerSecret*/);
 
     @GET(ApiConstants.ENDPOINT_APP_CONFIG)
     Call<AppConfigMod> getSys(@Query("sys") String system);

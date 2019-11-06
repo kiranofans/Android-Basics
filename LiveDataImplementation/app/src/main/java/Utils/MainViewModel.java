@@ -12,6 +12,8 @@ import Model.NewsMod;
 
 public class MainViewModel extends AndroidViewModel {
     /**
+     * A ViewModel is a data holder for UI Controllers
+     *
      * Difference between AndroidViewModel and ViewModel is only the visibility of Context;
      * AndroidViewModel has an application Context
      */
