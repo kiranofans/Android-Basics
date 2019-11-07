@@ -15,6 +15,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class NewsDataSource extends PageKeyedDataSource<Integer, ArticleResponse> {
+    /***
+     * DataSource is a architecture component that contains API to the data sources
+     * e.g.: Retrofit for a REST API, Room for local persistence (SQLite), and External
+     * content providers for OS
+     * **/
 
     public static final int PAGE_SIZE = 100;
     private static final int FIRST_PAGE = 1;

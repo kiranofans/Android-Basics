@@ -19,6 +19,13 @@ import retrofit2.Response;
 public class Repository {
     /**
      * Create a Repository class to interacting to LiveData
+     *
+     * A repository is a architecture component that saves as a data store
+     * for all of the application. It's the complete data model for the app,
+     * which provides simple data modification & retrieval APIs.
+     *
+     * Repository gets data by coordinating to fetch, sync, and persisting from different
+     * data source
      */
 
     private List<NewsMod.ArticleMod> articleList = new ArrayList<>();

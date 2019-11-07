@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initContent() {
         recyclerView = (RecyclerView) findViewById(R.id.news_recycler_view);
+
+        //Can add all the accessible methods or functions in NewsViewModel.class to this line
         NewsViewModel viewModel = ViewModelProviders.of(this).get(NewsViewModel.class);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));//must add this line
         pagingAdapter = new PagingAdapter(this);

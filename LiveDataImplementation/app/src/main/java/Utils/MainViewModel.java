@@ -12,7 +12,10 @@ import Model.NewsMod;
 
 public class MainViewModel extends AndroidViewModel {
     /**
-     * A ViewModel is a data holder for UI Controllers
+     * viewModels prepare and keep the data for the UI including LiveData,
+     * and Observables, survive configuration change, and it is the gateway for the UI controller.
+     * The UI controllers (activity and fragment) reach the ViewModel to reach the rest of
+     * the application. So it's a data store for UI controllers
      *
      * Difference between AndroidViewModel and ViewModel is only the visibility of Context;
      * AndroidViewModel has an application Context
