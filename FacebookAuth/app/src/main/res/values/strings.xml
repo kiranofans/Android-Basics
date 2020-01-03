@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Facebook Login</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <string name="facebook_login_btn">Login with Facebook</string>
+
+    <string name="facebook_app_id">633796443694208</string>
+    <string name="fb_login_protocol_scheme">fb633796443694208</string>
+</resources>
