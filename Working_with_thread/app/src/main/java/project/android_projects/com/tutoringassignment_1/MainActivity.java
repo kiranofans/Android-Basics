@@ -21,8 +21,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ActivityMainBindingImpl mBinding;
 
-    private static int currentIndexNext = 0;
-    private static int currentIndexPre = 0;
+    private static int currentIndex = 0;
     private Handler handler = new Handler();
 
     private int[] imgIds = new int[]{R.drawable.cute_cat, R.drawable.burger,
@@ -110,33 +109,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void showPreviousImage() {
-        mBinding.imgPlaceholder.setImageResource(imgIds[currentIndexPre]);
-        currentIndexPre -= currentIndexNext;
-        if (currentIndexNext == imgIds.length - 1) {
-            currentIndexPre = currentIndexNext;
-            currentIndexPre--;
-
-            if (currentIndexPre < 0 || currentIndexNext == 0) {
-                currentIndexPre = 0;
-                currentIndexNext = 0;
-                Toast.makeText(this, "no more image", Toast.LENGTH_SHORT).show();
-            }
+        mBinding.imgPlaceholder.setImageResource(imgIds[currentIndex]);
+        currentIndex--;
+        if (currentIndex < 0) {
+            currentIndex =0;
+            showNextImage();
             /*if(currentIndexNext == imgIds.length-1){
 
             }*/
+        }else{
+            showPreviousImage();
         }
-        Log.d(TAG, currentIndexPre + " previous");
+        Log.d(TAG, currentIndex + " previous");
     }
 
     private void showNextImage() {
-        mBinding.imgPlaceholder.setImageResource(imgIds[currentIndexNext]);
-        currentIndexNext++;//increase the currentIndexNext by 1
+        mBinding.imgPlaceholder.setImageResource(imgIds[currentIndex]);
+        currentIndex++;//increase the currentIndexNext by 1
 
-        if (currentIndexNext > imgIds.length - 1) {
+        if (currentIndex > imgIds.length - 1) {
             //If currentIndexNext exceed the last one, return to the first one
-            currentIndexNext = 0;
+            currentIndex = 0;
         }
-        Log.d(TAG, currentIndexNext + " next");
+        Log.d(TAG, currentIndex + " next");
 
     }
 
