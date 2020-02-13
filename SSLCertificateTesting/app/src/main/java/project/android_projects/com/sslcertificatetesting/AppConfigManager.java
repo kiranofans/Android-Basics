@@ -135,7 +135,7 @@ public class AppConfigManager {
     public void consumerLogin(final Context context, RetrofitApi apiService) {
         prefsMgr = new SharedPreferenceManager(context, PREF_FILE_GLOBAL);
 
-        loginCall = apiService.login(new LoginRequestBodyMod("sakurala111@yahoo.com", "123456"));
+        loginCall = apiService.login(new LoginRequestBodyMod("123@yahoo.com", "000000"));
         loginCall.enqueue(new Callback<ConsumerLogin>() {
             @Override
             public void onResponse(Call<ConsumerLogin> call, Response<ConsumerLogin> response) {
