@@ -1,4 +1,4 @@
-package com.example.paginglibraryimplementation;
+package com.example.paginglibraryimplementation.Data.Models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -8,9 +8,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import Models.ArticleResponse;
-
-class NewsMod implements Parcelable {
+public class NewsMod implements Parcelable {
     @SerializedName("urlToImage")
     @Expose
     private String imgURL;

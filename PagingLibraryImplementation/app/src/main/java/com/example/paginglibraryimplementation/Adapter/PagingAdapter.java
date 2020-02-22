@@ -1,5 +1,6 @@
-package Adapter;
+package com.example.paginglibraryimplementation.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,10 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
 import com.bumptech.glide.Glide;
+import com.example.paginglibraryimplementation.Data.Models.ArticleResponse;
 import com.example.paginglibraryimplementation.R;
-
-import Models.ArticleResponse;
-import Utils.BaseViewHolder;
 
 public class PagingAdapter extends androidx.paging.PagedListAdapter
         <ArticleResponse, BaseViewHolder> {
@@ -22,7 +21,11 @@ public class PagingAdapter extends androidx.paging.PagedListAdapter
     private Context context;
     private LayoutInflater inflater;
 
-    public static final DiffUtil.ItemCallback<ArticleResponse> CALLBACK =
+    public PagingAdapter(){
+        super(ARTICLE_CALLBACK);
+    }
+
+    public static final DiffUtil.ItemCallback<ArticleResponse> ARTICLE_CALLBACK =
             new DiffUtil.ItemCallback<ArticleResponse>() {
                 @Override
                 public boolean areItemsTheSame(@NonNull ArticleResponse oldItem,
@@ -30,15 +33,16 @@ public class PagingAdapter extends androidx.paging.PagedListAdapter
                     return oldItem.getSource().getId() == newItem.getSource().getId();
                 }
 
+                @SuppressLint("DiffUtilEquals")
                 @Override
                 public boolean areContentsTheSame(@NonNull ArticleResponse oldItem,
                                                   @NonNull ArticleResponse newItem) {
-                    return true;
+                    return oldItem == newItem;
                 }
             };
 
     public PagingAdapter(Context context) {
-        super(CALLBACK);
+        super(ARTICLE_CALLBACK);
         this.context = context;
     }
 

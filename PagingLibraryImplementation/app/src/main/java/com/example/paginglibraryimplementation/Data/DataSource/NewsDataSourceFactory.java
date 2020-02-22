@@ -1,20 +1,20 @@
-package Utils;
+package com.example.paginglibraryimplementation.Data.DataSource;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.paging.DataSource;
 import androidx.paging.PageKeyedDataSource;
 
-import Models.ArticleResponse;
-import com.example.paginglibraryimplementation.NewsDataSource;
+import com.example.paginglibraryimplementation.Data.Models.ArticleResponse;
+
 
 public class NewsDataSourceFactory extends DataSource.Factory {
-    private MutableLiveData<PageKeyedDataSource<Integer, ArticleResponse>> newsLiveDataSource =
+    private MutableLiveData<PageKeyedDataSource<Long, ArticleResponse>> newsLiveDataSource =
             new MutableLiveData<>();
 
     @NonNull
     @Override
-    public DataSource<Integer, ArticleResponse> create() {
+    public DataSource<Long, ArticleResponse> create() {
         //getting our data source object
         NewsDataSource newsDataSource = new NewsDataSource();
 
@@ -26,7 +26,7 @@ public class NewsDataSourceFactory extends DataSource.Factory {
     }
 
     //getter for newsliveDataSource
-    public MutableLiveData<PageKeyedDataSource<Integer, ArticleResponse>> getNewsLiveDataSource(){
+    public MutableLiveData<PageKeyedDataSource<Long, ArticleResponse>> getNewsLiveDataSource() {
         return newsLiveDataSource;
     }
 }

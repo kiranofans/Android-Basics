@@ -1,4 +1,4 @@
-package com.example.paginglibraryimplementation;
+package com.example.paginglibraryimplementation.Activity;
 
 import android.os.Bundle;
 
@@ -9,12 +9,15 @@ import androidx.paging.PagedList;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import Adapter.PagingAdapter;
-import Models.ArticleResponse;
+import com.example.paginglibraryimplementation.Data.Models.ArticleResponse;
+import com.example.paginglibraryimplementation.R;
+import com.example.paginglibraryimplementation.ViewModel.NewsViewModel;
+import com.example.paginglibraryimplementation.Adapter.PagingAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private PagingAdapter pagingAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
